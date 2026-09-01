@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNA1103 - Negociación: Mini Casos de Aplicación (10 Minutos)</title>
+<style>
+  :root {
+    --duoc-blue: #002B49;
+    --duoc-navy: #001A2E;
+    --duoc-yellow: #FFAA00;
+    --duoc-yellow-hover: #FFB81C;
+    --card-bg: #FFFFFF;
+    --text-dark: #1E293B;
+    --text-light: #F8FAFC;
+    --accent-blue: #0284C7;
+    --accent-green: #0D9488;
+    --accent-red: #E11D48;
+    --border-subtle: #E2E8F0;
+    --bg-gray: #F1F5F9;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body {
+    background-color: #0F172A;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck-container {
+    width: 98vw;
+    max-width: 1700px;
+    height: 94vh;
+    max-height: 950px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 30px 45px 75px 45px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header Branding */
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-subtle);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+
+  .course-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .course-tag {
+    background: var(--duoc-blue);
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .activity-title {
+    font-size: 1.15rem;
+    color: #64748B;
+    font-weight: 600;
+  }
+
+  .duoc-logo-text {
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--duoc-blue);
+    letter-spacing: -0.5px;
+  }
+
+  .duoc-logo-text span {
+    color: var(--duoc-yellow);
+  }
+
+  /* Slide 1: Cover */
+  .cover-slide {
+    background: linear-gradient(135deg, var(--duoc-blue) 0%, var(--duoc-navy) 100%);
+    color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    position: relative;
+  }
+
+  .cover-logo {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 24px;
+  }
+
+  .cover-logo h2 {
+    font-size: 2.6rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
+  .cover-logo h2 span {
+    color: var(--duoc-yellow);
+  }
+
+  .cover-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    color: var(--duoc-yellow);
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+
+  .cover-subtitle {
+    font-size: 1.65rem;
+    font-weight: 400;
+    color: #E2E8F0;
+    margin-bottom: 35px;
+    max-width: 1000px;
+    line-height: 1.4;
+  }
+
+  .cover-pill-container {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cover-pill {
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 10px 22px;
+    border-radius: 24px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #F8FAFC;
+  }
+
+  /* Case Banner & Timer Widget */
+  .case-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F8FAFC;
+    border-left: 6px solid var(--duoc-blue);
+    padding: 12px 22px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 18px;
+  }
+
+  .case-banner h3 {
+    font-size: 1.55rem;
+    color: var(--duoc-blue);
+    font-weight: 800;
+  }
+
+  /* Contador Regresivo Interactivo */
+  .timer-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #FEF3C7;
+    border: 2px solid var(--duoc-yellow);
+    color: #92400E;
+    padding: 6px 16px;
+    border-radius: 24px;
+  }
+
+  .timer-display {
+    font-family: "Courier New", monospace;
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #B45309;
+    min-width: 75px;
+    text-align: center;
+  }
+
+  .timer-display.ended {
+    color: var(--accent-red);
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
+
+  .timer-btn {
+    background: #FFFFFF;
+    border: 1px solid #D97706;
+    color: #B45309;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .timer-btn:hover {
+    background: var(--duoc-yellow);
+    color: var(--duoc-navy);
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 22px;
+    flex: 1;
+  }
+
+  .context-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .context-card h4 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: #64748B;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+
+  .context-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #1E293B;
+    flex: 1;
+  }
+
+  .challenge-card {
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .challenge-card h4 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: #0369A1;
+    letter-spacing: 0.8px;
+    margin-bottom: 16px;
+    font-weight: 800;
+  }
+
+  .challenge-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .challenge-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 1.2rem;
+    color: #0F172A;
+    line-height: 1.5;
+  }
+
+  .challenge-num {
+    background: var(--duoc-blue);
+    color: #FFFFFF;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Solution Slide Layout */
+  .solution-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F0FDF4;
+    border-left: 6px solid var(--accent-green);
+    padding: 14px 22px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 18px;
+  }
+
+  .solution-banner h3 {
+    font-size: 1.65rem;
+    color: #065F46;
+    font-weight: 800;
+  }
+
+  .tag-theoretical {
+    background: #DCFCE7;
+    color: #166534;
+    border: 1px solid #86EFAC;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    flex: 1;
+  }
+
+  .solution-box {
+    background: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 22px 24px;
+    border-top: 5px solid var(--duoc-blue);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+  }
+
+  .solution-box.highlight {
+    border-top-color: var(--duoc-yellow);
+    background: #FFFDF7;
+  }
+
+  .solution-box h4 {
+    color: var(--duoc-blue);
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .solution-box p, .solution-box ul {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #1E293B;
+  }
+
+  .solution-box ul {
+    margin-left: 20px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Navigation Footer */
+  .footer-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #F8FAFC;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 10;
+  }
+
+  .slide-counter {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #64748B;
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+  }
+
+  .nav-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    color: var(--duoc-blue);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-btn:hover {
+    background: var(--duoc-blue);
+    color: #FFFFFF;
+  }
+
+  .nav-btn.primary {
+    background: var(--duoc-yellow);
+    color: var(--duoc-navy);
+    border-color: var(--duoc-yellow);
+  }
+
+  .nav-btn.primary:hover {
+    background: var(--duoc-yellow-hover);
+  }
+</style>
+</head>
+<body>
+
+<div class="deck-container">
+
+  <!-- SLIDE 1: PORTADA -->
+  <div class="slide active cover-slide" id="slide-1">
+    <div class="cover-logo">
+      <h2>Duoc<span>UC</span></h2>
+    </div>
+    <h1 class="cover-title">MINI CASOS DE APLICACIÓN</h1>
+    <p class="cover-subtitle">Experiencia de Aprendizaje 1 (EA1): Comunicación Estratégica, Persuasión y Negociación Consultiva</p>
+    <div class="cover-pill-container">
+      <div class="cover-pill">Asignatura: VNA1103 Negociación</div>
+      <div class="cover-pill">5 Desafíos de Resolución (10 Minutos c/u)</div>
+      <div class="cover-pill">Metodología de Casos B2B</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: CASO 1 (CONTEXTO Y PREGUNTAS) -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">EA1 • Mini Caso 1 / 5</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="case-banner">
+      <h3>CASO 1: El Conflicto de la Exclusividad Comercial</h3>
+      <div class="timer-widget">
+        <span>⏱</span>
+        <span class="timer-display" id="timer-display-1">10:00</span>
+        <button class="timer-btn" onclick="toggleTimer(1)">Iniciar</button>
+        <button class="timer-btn" onclick="resetTimer(1)">Reiniciar</button>
+      </div>
+    </div>
+    <div class="case-grid">
+      <div class="context-card">
+        <h4>Contexto del Escenario</h4>
+        <p class="context-text">
+          Una reconocida cadena de cafeterías negocia con un productor artesanal de café de especialidad. 
+          La cafetería exige por contrato: <em>«No puedes venderle a ningún otro local en un radio de 5 km a la redonda»</em>.<br><br>
+          El productor rechaza tajantemente la oferta, afirmando que jamás firmará una exclusividad territorial porque teme que sus ventas se desplomen si la cafetería no cumple con el volumen de compra proyectado.
+        </p>
+      </div>
+      <div class="challenge-card">
+        <h4>Desafío para el Equipo (10 Minutos)</h4>
+        <ul class="challenge-list">
+          <li>
+            <div class="challenge-num">1</div>
+            <div>Identifica la <strong>Posición explícita</strong> y el <strong>Interés real subyacente</strong> de ambas partes (Cafetería vs. Productor).</div>
+          </li>
+          <li>
+            <div class="challenge-num">2</div>
+            <div>Propón una solución mediante <strong>Reencuadre Estratégico (Framing)</strong> que destrabe el acuerdo sin imponer exclusividad geográfica.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: CASO 1 (RESOLUCIÓN) -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">Resolución Teórica • Mini Caso 1</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="solution-banner">
+      <h3>RESOLUCIÓN CASO 1: Posición vs. Interés y Reencuadre</h3>
+      <span class="tag-theoretical">Marco Lewicki Cap. 1 y 3</span>
+    </div>
+    <div class="solution-grid">
+      <div class="solution-box">
+        <h4>1. Diagnóstico de Posiciones vs. Intereses</h4>
+        <ul>
+          <li><strong>Cafetería:</strong> Posición = Exclusividad territorial de 5 km. | <em>Interés:</em> Diferenciación comercial y asegurar una oferta exclusiva frente a sus competidores.</li>
+          <li><strong>Productor:</strong> Posición = "No firmo exclusividades". | <em>Interés:</em> Seguridad de flujo de caja y evitar la dependencia crítica de un solo comprador.</li>
+        </ul>
+      </div>
+      <div class="solution-box highlight">
+        <h4>2. Solución por Reencuadre (Framing)</h4>
+        <p><strong>Cambio de variable:</strong> En lugar de restringir el territorio (suma cero), se negocia la <em>exclusividad de la receta o blend</em>.</p>
+        <p>El productor desarrolla un tostado y etiquetado exclusivo para la cafetería, manteniendo la libertad de vender sus otros granos en la misma zona sin riesgo financiero.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: CASO 2 (CONTEXTO Y PREGUNTAS) -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">EA1 • Mini Caso 2 / 5</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="case-banner">
+      <h3>CASO 2: El Desastre de la Propuesta Técnica</h3>
+      <div class="timer-widget">
+        <span>⏱</span>
+        <span class="timer-display" id="timer-display-2">10:00</span>
+        <button class="timer-btn" onclick="toggleTimer(2)">Iniciar</button>
+        <button class="timer-btn" onclick="resetTimer(2)">Reiniciar</button>
+      </div>
+    </div>
+    <div class="case-grid">
+      <div class="context-card">
+        <h4>Contexto del Escenario</h4>
+        <p class="context-text">
+          Una consultora de analítica de datos presenta una propuesta comercial a la Gerenta de Operaciones de una empresa de retail tradicional.
+          El consultor expone durante 20 minutos usando términos como: <em>«arquitectura serverless, pipelines ELT y algoritmos no supervisados»</em>.<br><br>
+          La gerenta, abrumada y temiendo quedar en evidencia por no dominar la jerga técnica, se cruza de brazos y concluye cortante: <em>«El servicio es demasiado caro para lo que necesitamos»</em>.
+        </p>
+      </div>
+      <div class="challenge-card">
+        <h4>Desafío para el Equipo (10 Minutos)</h4>
+        <ul class="challenge-list">
+          <li>
+            <div class="challenge-num">1</div>
+            <div>Identifica al menos <strong>dos Ruidos Comunicacionales</strong> (Semánticos, Psicológicos o de Contexto) que sabotearon la reunión.</div>
+          </li>
+          <li>
+            <div class="challenge-num">2</div>
+            <div>¿Qué debió aplicar el consultor en las etapas de <strong>Codificación</strong> y <strong>Retroalimentación (Escucha Activa)</strong>?</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: CASO 2 (RESOLUCIÓN) -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">Resolución Teórica • Mini Caso 2</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="solution-banner">
+      <h3>RESOLUCIÓN CASO 2: Arquitectura de la Comunicación</h3>
+      <span class="tag-theoretical">Axiomas de Watzlawick y Filtros Críticos</span>
+    </div>
+    <div class="solution-grid">
+      <div class="solution-box">
+        <h4>1. Ruidos Comunicacionales Identificados</h4>
+        <ul>
+          <li><strong>Ruido Semántico:</strong> Uso excesivo de tecnicismos complejos que no transmiten valor tangible al tomador de decisión.</li>
+          <li><strong>Ruido Psicológico / Emocional:</strong> Amenaza al ego y estatus de la contraparte; el cliente levanta una objeción de precio fingida como barrera defensiva.</li>
+        </ul>
+      </div>
+      <div class="solution-box highlight">
+        <h4>2. Corrección del Circuito Comunicacional</h4>
+        <ul>
+          <li><strong>Codificación Estratégica:</strong> Traducir atributos técnicos a beneficios de negocio (ahorro en horas-hombre, reducción de mermas y aumento de margen).</li>
+          <li><strong>Retroalimentación Activa:</strong> No asumir comprensión; realizar preguntas de verificación periódicas para calibrar al receptor.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: CASO 3 (CONTEXTO Y PREGUNTAS) -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">EA1 • Mini Caso 3 / 5</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="case-banner">
+      <h3>CASO 3: La Negociación del Local Comercial</h3>
+      <div class="timer-widget">
+        <span>⏱</span>
+        <span class="timer-display" id="timer-display-3">10:00</span>
+        <button class="timer-btn" onclick="toggleTimer(3)">Iniciar</button>
+        <button class="timer-btn" onclick="resetTimer(3)">Reiniciar</button>
+      </div>
+    </div>
+    <div class="case-grid">
+      <div class="context-card">
+        <h4>Contexto del Escenario</h4>
+        <p class="context-text">
+          Tomás negocia la renovación del contrato de arriendo de su distribuidora automotriz. Su arrendador le dice: <em>«Tengo otros dos interesados dispuestos a pagar un 30% más el próximo mes»</em>.<br><br>
+          Tomás no sabe si el arrendador está mintiendo (bluff) para forzar un aumento, pero tampoco quiere confesarle que su negocio depende críticamente de esa esquina exacta porque perdería toda su clientela histórica.
+        </p>
+      </div>
+      <div class="challenge-card">
+        <h4>Desafío para el Equipo (10 Minutos)</h4>
+        <ul class="challenge-list">
+          <li>
+            <div class="challenge-num">1</div>
+            <div>Explica cómo se manifiestan el <strong>Dilema de la Honestidad</strong> y el <strong>Dilema de la Confianza</strong> (Kelley) en Tomás.</div>
+          </li>
+          <li>
+            <div class="challenge-num">2</div>
+            <div>¿Cómo debería gestionar Tomás la proyección de su <strong>MAPAN</strong> para no quedar acorralado en la mesa?</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: CASO 3 (RESOLUCIÓN) -->
+  <div class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">Resolución Teórica • Mini Caso 3</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="solution-banner">
+      <h3>RESOLUCIÓN CASO 3: Los Dilemas de Kelley y la MAPAN</h3>
+      <span class="tag-theoretical">Harold Kelley (1966) y Lewicki Cap. 1 y 2</span>
+    </div>
+    <div class="solution-grid">
+      <div class="solution-box">
+        <h4>1. Análisis de los Dilemas Fundamentales</h4>
+        <ul>
+          <li><strong>Dilema de la Confianza:</strong> Tensión de Tomás sobre <em>cuánto creer</em> respecto a los supuestos otros dos interesados al 30% más.</li>
+          <li><strong>Dilema de la Honestidad:</strong> Tensión de Tomás sobre <em>cuánta verdad revelar</em> sobre su alta dependencia del local.</li>
+        </ul>
+      </div>
+      <div class="solution-box highlight">
+        <h4>2. Gestión Estratégica de la MAPAN</h4>
+        <p>Tomás debe investigar alternativas reales en cuadras aledañas y proyectar que está cotizando opciones viables de traslado.</p>
+        <p>Al proyectar independencia y una alternativa sólida (MAPAN fuerte), neutraliza la presión del aumento artificial sin necesidad de mentir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: CASO 4 (CONTEXTO Y PREGUNTAS) -->
+  <div class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">EA1 • Mini Caso 4 / 5</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="case-banner">
+      <h3>CASO 4: El Abordaje Comercial Consultivo</h3>
+      <div class="timer-widget">
+        <span>⏱</span>
+        <span class="timer-display" id="timer-display-4">10:00</span>
+        <button class="timer-btn" onclick="toggleTimer(4)">Iniciar</button>
+        <button class="timer-btn" onclick="resetTimer(4)">Reiniciar</button>
+      </div>
+    </div>
+    <div class="case-grid">
+      <div class="context-card">
+        <h4>Contexto del Escenario</h4>
+        <p class="context-text">
+          Una agencia de marketing digital se reúne con una empresa de retail muy escéptica. 
+          En los primeros 10 minutos no muestran lista de precios; en su lugar, le regalan un diagnóstico de rendimiento web que detecta fallas críticas en su pasarela de pagos.<br><br>
+          Además, exhiben su certificación como <em>Premier Partner</em> y presentan un caso de estudio anónimo de una gran tienda del mismo sector que aumentó sus ventas un 80% el último trimestre.
+        </p>
+      </div>
+      <div class="challenge-card">
+        <h4>Desafío para el Equipo (10 Minutos)</h4>
+        <ul class="challenge-list">
+          <li>
+            <div class="challenge-num">1</div>
+            <div>Identifica los <strong>tres principios de persuasión de Robert Cialdini</strong> utilizados en la apertura de la reunión.</div>
+          </li>
+          <li>
+            <div class="challenge-num">2</div>
+            <div>¿Por qué esta combinación reduce la resistencia psicológica de la contraparte antes de hablar de costos?</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: CASO 4 (RESOLUCIÓN) -->
+  <div class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">Resolución Teórica • Mini Caso 4</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="solution-banner">
+      <h3>RESOLUCIÓN CASO 4: Principios de Influencia de Cialdini</h3>
+      <span class="tag-theoretical">Psicología de la Persuasión y Venta Consultiva</span>
+    </div>
+    <div class="solution-grid">
+      <div class="solution-box">
+        <h4>1. Tríada de Principios de Cialdini</h4>
+        <ul>
+          <li><strong>Reciprocidad:</strong> El diagnóstico gratuito genera una obligación psicológica de escucha y apertura.</li>
+          <li><strong>Autoridad (Ethos):</strong> La certificación Premier Partner valida su competencia técnica de forma objetiva.</li>
+          <li><strong>Prueba Social:</strong> El caso de éxito en la misma industria disminuye el riesgo percibido de equivocarse.</li>
+        </ul>
+      </div>
+      <div class="solution-box highlight">
+        <h4>2. Impacto en la Mesa de Negociación</h4>
+        <p>Estos principios desactivan la postura defensiva del cliente.</p>
+        <p>Al demostrar valor tangible y credibilidad técnica antes de discutir honorarios, el precio futuro se percibe como una inversión justificada y no como un gasto riesgoso.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CASO 5 (CONTEXTO Y PREGUNTAS) -->
+  <div class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">EA1 • Mini Caso 5 / 5</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="case-banner">
+      <h3>CASO 5: La Negociación antes de la Negociación</h3>
+      <div class="timer-widget">
+        <span>⏱</span>
+        <span class="timer-display" id="timer-display-5">10:00</span>
+        <button class="timer-btn" onclick="toggleTimer(5)">Iniciar</button>
+        <button class="timer-btn" onclick="resetTimer(5)">Reiniciar</button>
+      </div>
+    </div>
+    <div class="case-grid">
+      <div class="context-card">
+        <h4>Contexto del Escenario</h4>
+        <p class="context-text">
+          Una empresa agroindustrial busca contratar a un Jefe de Aseguramiento de Calidad y Normas HACCP con un presupuesto máximo de $2.500.000.<br><br>
+          El candidato seleccionado mantiene un perfil de LinkedIn con alta autoridad técnica, publica análisis sobre inocuidad alimentaria y cuenta con recomendaciones de gerentes del rubro. Tras la entrevista, el profesional solicita $3.000.000 y el directorio aprueba ampliar el presupuesto para cerrarlo.
+        </p>
+      </div>
+      <div class="challenge-card">
+        <h4>Desafío para el Equipo (10 Minutos)</h4>
+        <ul class="challenge-list">
+          <li>
+            <div class="challenge-num">1</div>
+            <div>¿Cómo influyeron los <strong>Factores Intangibles</strong> sobre la variable <strong>Tangible</strong> (salario)?</div>
+          </li>
+          <li>
+            <div class="challenge-num">2</div>
+            <div>¿Qué efecto provocó la Marca Personal sobre el <strong>Punto de Resistencia</strong> de la empresa empleadora?</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: CASO 5 (RESOLUCIÓN) -->
+  <div class="slide" id="slide-11">
+    <div class="slide-header">
+      <div class="course-badge">
+        <span class="course-tag">VNA1103</span>
+        <span class="activity-title">Resolución Teórica • Mini Caso 5</span>
+      </div>
+      <div class="duoc-logo-text">Duoc<span>UC</span></div>
+    </div>
+    <div class="solution-banner">
+      <h3>RESOLUCIÓN CASO 5: Marca Personal y Apalancamiento</h3>
+      <span class="tag-theoretical">Poder Experto, Ethos y Puntos de Reserva</span>
+    </div>
+    <div class="solution-grid">
+      <div class="solution-box">
+        <h4>1. Intangibles sobre Tangibles</h4>
+        <p>La reputación digital y el <em>Poder de Experto</em> redujeron a cero el riesgo operativo percibido por la empresa.</p>
+        <p>La certeza de cumplimiento y el estatus técnico pesaron más que el costo nominal de la remuneración.</p>
+      </div>
+      <div class="solution-box highlight">
+        <h4>2. Desplazamiento del Punto de Resistencia</h4>
+        <p>La marca personal sólida generó un <strong>Efecto Halo</strong> que aumentó la disposición a pagar del empleador.</p>
+        <p>El punto de resistencia de la empresa se desplazó de $2.5M a $3.0M a favor del profesional, expandiendo la ZOPA de mutuo acuerdo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION FOOTER -->
+  <div class="footer-nav">
+    <div class="slide-counter" id="slideCounter">Diapositiva 1 / 11</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Anterior</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="changeSlide(1)">Siguiente ▶</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 11;
+
+  // Lógica de Diapositivas
+  function showSlide(n) {
+    const slides = document.querySelectorAll('.slide');
+    if (n > totalSlides) currentSlide = totalSlides;
+    if (n < 1) currentSlide = 1;
+
+    slides.forEach(slide => slide.classList.remove('active'));
+    document.getElementById(`slide-${currentSlide}`).classList.add('active');
+
+    document.getElementById('slideCounter').innerText = `Diapositiva ${currentSlide} / ${totalSlides}`;
+    document.getElementById('prevBtn').disabled = (currentSlide === 1);
+  }
+
+  function changeSlide(direction) {
+    currentSlide += direction;
+    showSlide(currentSlide);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      changeSlide(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      changeSlide(-1);
+    }
+  });
+
+  // Lógica del Temporizador Regresivo (10 Minutos = 600 segundos)
+  const timerStates = {};
+
+  for (let i = 1; i <= 5; i++) {
+    timerStates[i] = {
+      timeLeft: 600,
+      interval: null,
+      running: false
+    };
+  }
+
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function updateTimerDisplay(caseNum) {
+    const display = document.getElementById(`timer-display-${caseNum}`);
+    if (!display) return;
+    display.innerText = formatTime(timerStates[caseNum].timeLeft);
+    if (timerStates[caseNum].timeLeft <= 0) {
+      display.classList.add('ended');
+      display.innerText = '00:00';
+    } else {
+      display.classList.remove('ended');
+    }
+  }
+
+  function toggleTimer(caseNum) {
+    const state = timerStates[caseNum];
+    const btn = event.target;
+
+    if (state.running) {
+      clearInterval(state.interval);
+      state.running = false;
+      btn.innerText = 'Reanudar';
+    } else {
+      if (state.timeLeft <= 0) state.timeLeft = 600;
+      state.running = true;
+      btn.innerText = 'Pausar';
+      state.interval = setInterval(() => {
+        if (state.timeLeft > 0) {
+          state.timeLeft--;
+          updateTimerDisplay(caseNum);
+        } else {
+          clearInterval(state.interval);
+          state.running = false;
+          btn.innerText = 'Iniciar';
+        }
+      }, 1000);
+    }
+  }
+
+  function resetTimer(caseNum) {
+    const state = timerStates[caseNum];
+    clearInterval(state.interval);
+    state.running = false;
+    state.timeLeft = 600;
+    updateTimerDisplay(caseNum);
+    // Restaurar texto del botón Iniciar si existe en el contenedor
+    const container = document.getElementById(`timer-display-${caseNum}`).parentElement;
+    const btns = container.querySelectorAll('.timer-btn');
+    if (btns.length > 0) btns[0].innerText = 'Iniciar';
+  }
+</script>
+
+</body>
+</html>

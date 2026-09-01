@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNA1103 - Portal Interactivo de Negociación | Duoc UC</title>
+<style>
+  :root {
+    --duoc-blue: #002B49;
+    --duoc-navy: #001A2E;
+    --duoc-yellow: #FFAA00;
+    --duoc-yellow-hover: #FFB81C;
+    --text-dark: #1E293B;
+    --text-muted: #64748B;
+    --bg-main: #0F172A;
+    --card-bg: #FFFFFF;
+    --border-subtle: #E2E8F0;
+    --accent-blue: #0284C7;
+    --accent-teal: #0D9488;
+    --accent-purple: #7C3AED;
+    --accent-amber: #D97706;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 40px 20px 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hub-container {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .hub-header {
+    background: linear-gradient(135deg, var(--duoc-blue) 0%, var(--duoc-navy) 100%);
+    border-radius: 20px;
+    padding: 40px 45px;
+    color: #FFFFFF;
+    margin-bottom: 35px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .header-content h1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .header-content h1 span {
+    color: var(--duoc-yellow);
+  }
+
+  .header-content p {
+    font-size: 1.15rem;
+    color: #CBD5E1;
+    max-width: 700px;
+    line-height: 1.5;
+  }
+
+  .header-badge {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 25px;
+    border-radius: 14px;
+    text-align: right;
+  }
+
+  .header-badge .course-code {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--duoc-yellow);
+    display: block;
+  }
+
+  .header-badge .term {
+    font-size: 0.9rem;
+    color: #E2E8F0;
+    font-weight: 600;
+  }
+
+  .section-label {
+    color: #94A3B8;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin-bottom: 35px;
+  }
+
+  .hub-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hub-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.35);
+    border-color: #CBD5E1;
+  }
+
+  .hub-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+  }
+
+  .hub-card.ea1-casos::before { background: var(--accent-amber); }
+  .hub-card.ea1-guia::before { background: var(--accent-teal); }
+  .hub-card.ea1-roosevelt::before { background: var(--accent-blue); }
+  .hub-card.ea1-comunicacion::before { background: var(--accent-purple); }
+
+  .card-top {
+    margin-bottom: 20px;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tag.active-tag { background: #FEF3C7; color: #92400E; }
+  .tag.study-tag { background: #DCFCE7; color: #166534; }
+  .tag.deck-tag { background: #E0F2FE; color: #0369A1; }
+  .tag.soon-tag { background: #F1F5F9; color: #64748B; }
+
+  .card-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--duoc-blue);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.98rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 18px;
+    margin-top: 15px;
+  }
+
+  .card-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--duoc-blue);
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+
+  .card-btn:hover {
+    background: var(--duoc-yellow);
+    color: var(--duoc-navy);
+  }
+
+  .card-btn.secondary {
+    background: var(--accent-teal);
+  }
+
+  .card-btn.secondary:hover {
+    background: #0F766E;
+    color: #FFFFFF;
+  }
+
+  .card-btn.disabled {
+    background: #E2E8F0;
+    color: #94A3B8;
+    pointer-events: none;
+  }
+
+  .hub-footer-callout {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 20px 25px;
+    color: #94A3B8;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .hub-footer-callout strong {
+    color: #E2E8F0;
+  }
+</style>
+</head>
+<body>
+
+<div class="hub-container">
+
+  <header class="hub-header">
+    <div class="header-content">
+      <h1>Portal Interactivo de <span>Negociación</span></h1>
+      <p>Hub central de simulaciones interactivas, presentaciones con temporizador y guías de estudio de casos para las sesiones presenciales y trabajo autónomo.</p>
+    </div>
+    <div class="header-badge">
+      <span class="course-code">VNA1103</span>
+      <span class="term">Duoc UC • Plaza Vespucio</span>
+    </div>
+  </header>
+
+  <div class="section-label"> Experiencia de Aprendizaje 1 (EA1): Comunicación y Persuasión</div>
+  
+  <div class="hub-grid">
+
+    <div class="hub-card ea1-casos">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag active-tag">⏱ En Sala (10 min)</span>
+          <span class="tag deck-tag">Presentación</span>
+        </div>
+        <h2 class="card-title">Mini Casos de Aplicación Rápida</h2>
+        <p class="card-desc">5 desafíos prácticos proyectables con temporizador interactivo de 10:00 minutos por caso, analizando dilemas de Kelley, framing, ruidos y marca personal.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">11 Diapositivas</span>
+        <a href="mini-casos.html" class="card-btn">Abrir Presentación ➔</a>
+      </div>
+    </div>
+
+    <div class="hub-card ea1-guia">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag study-tag">📖 Estudio / AVA</span>
+          <span class="tag deck-tag">Documento</span>
+        </div>
+        <h2 class="card-title">Guía de Estudio y Análisis de Casos</h2>
+        <p class="card-desc">Compendio analítico con el desglose teórico completo de los 5 casos, marco de Lewicki, Cialdini y Watzlawick con formato imprimible para la Formativa 1.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Lectura Profunda</span>
+        <a href="guia-estudio.html" class="card-btn secondary">Ver Guía de Casos ➔</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hub-footer-callout">
+    💡 <strong>Nota para los Estudiantes:</strong> Este portal es de acceso libre. Pueden guardar este enlace en los marcadores de su teléfono móvil para consultar las actividades de clase y el material de preparación para las evaluaciones.
+  </div>
+
+</div>
+
+</body>
+</html>
