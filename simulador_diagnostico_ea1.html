@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNA1103 - Simulador Diagnóstico EA1 | Duoc UC</title>
+<style>
+  :root {
+    --duoc-blue: #002B49;
+    --duoc-navy: #001A2E;
+    --duoc-yellow: #FFAA00;
+    --text-dark: #1E293B;
+    --text-muted: #64748B;
+    --bg-main: #0F172A;
+    --border-subtle: #E2E8F0;
+    --correct-bg: #F0FDF4;
+    --correct-border: #22C55E;
+    --correct-text: #15803D;
+    --incorrect-bg: #FEF2F2;
+    --incorrect-border: #EF4444;
+    --incorrect-text: #B91C1C;
+    --accent-blue: #0284C7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { background-color: var(--bg-main); color: var(--text-dark); min-height: 100vh; padding: 30px 15px 60px 15px; display: flex; flex-direction: column; align-items: center; }
+  .quiz-container { width: 100%; max-width: 950px; background: #FFFFFF; border-radius: 18px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); padding: 40px 50px; margin-bottom: 30px; }
+  .quiz-header { border-bottom: 3px solid var(--duoc-yellow); padding-bottom: 25px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; }
+  .header-left h1 { font-size: 2.1rem; font-weight: 900; color: var(--duoc-blue); letter-spacing: -0.5px; margin-bottom: 6px; }
+  .header-left p { font-size: 1.05rem; color: var(--text-muted); font-weight: 600; }
+  .header-badge { background: var(--duoc-blue); color: #FFFFFF; padding: 10px 18px; border-radius: 10px; text-align: right; }
+  .header-badge span { color: var(--duoc-yellow); display: block; font-size: 1.15rem; font-weight: 900; }
+  .header-badge small { color: #CBD5E1; font-size: 0.8rem; }
+  .score-bar { background: #F8FAFC; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px 22px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 15px; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+  .score-metric { font-size: 1rem; font-weight: 700; color: var(--duoc-blue); }
+  .score-metric span { font-size: 1.25rem; color: var(--accent-blue); }
+  .reset-btn { background: #FFFFFF; border: 1px solid #CBD5E1; color: var(--text-muted); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+  .reset-btn:hover { background: #F1F5F9; color: var(--duoc-blue); }
+  .q-card { border: 1px solid var(--border-subtle); border-radius: 14px; padding: 24px 28px; margin-bottom: 24px; background: #FFFFFF; }
+  .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .q-num { background: var(--duoc-blue); color: #FFFFFF; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; }
+  .q-tag { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
+  .q-text { font-size: 1.15rem; font-weight: 700; color: #0F172A; line-height: 1.5; margin-bottom: 18px; }
+  .options-grid { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn { background: #F8FAFC; border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 12px 18px; font-size: 1rem; color: #334155; text-align: left; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; line-height: 1.4; }
+  .opt-btn:hover:not(.disabled) { background: #F1F5F9; border-color: #94A3B8; }
+  .opt-letter { font-weight: 800; color: var(--duoc-blue); background: #E2E8F0; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+  .feedback-box { display: none; margin-top: 16px; padding: 16px 20px; border-radius: 10px; font-size: 0.98rem; line-height: 1.55; }
+  .feedback-box.correct { display: block; background: var(--correct-bg); border: 1.5px solid var(--correct-border); color: var(--correct-text); }
+  .feedback-box.incorrect { display: block; background: var(--incorrect-bg); border: 1.5px solid var(--incorrect-border); color: var(--incorrect-text); }
+  .opt-btn.correct-opt { background: #DCFCE7 !important; border-color: #22C55E !important; font-weight: 700; color: #14532D !important; }
+  .opt-btn.incorrect-opt { background: #FEE2E2 !important; border-color: #EF4444 !important; color: #7F1D1D !important; }
+  .opt-btn.disabled { cursor: default; }
+  .actions-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; max-width: 950px; }
+  .back-link { background: #FFFFFF; border: 1px solid var(--border-subtle); color: var(--duoc-blue); text-decoration: none; padding: 10px 18px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; }
+  .back-link:hover { background: var(--duoc-blue); color: #FFFFFF; }
+</style>
+</head>
+<body>
+<div class="actions-nav">
+  <a href="index.html" class="back-link">◀ Volver al Portal Hub</a>
+</div>
+<div class="quiz-container">
+  <header class="quiz-header">
+    <div class="header-left">
+      <h1>SIMULADOR DIAGNÓSTICO: EA1</h1>
+      <p>Entrenamiento Interactivo con Retroalimentación Inmediata • Formativa 1</p>
+    </div>
+    <div class="header-badge">
+      DUOC UC
+      <span>VNA1103</span>
+      <small>Docente Fabián Urbina Peña</small>
+    </div>
+  </header>
+
+  <div class="score-bar">
+    <div class="score-metric">Progreso: <span id="answered-count">0</span>/10 preguntas</div>
+    <div class="score-metric">Aciertos: <span id="score-count">0</span> pts</div>
+    <button class="reset-btn" onclick="resetQuiz()">Reiniciar Test</button>
+  </div>
+
+  <div class="q-card" id="q1">
+    <div class="q-header"><span class="q-num">Pregunta 01</span><span class="q-tag">Módulo 1 • Interdependencia</span></div>
+    <div class="q-text">¿Cuál es la diferencia fundamental entre una negociación de suma cero (distributiva) y una de suma no cero (integradora) según Lewicki?</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(1, 0, false)"><span class="opt-letter">A</span><span>En la distributiva siempre intervienen mediadores externos y en la integradora es estrictamente privada.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(1, 1, true)"><span class="opt-letter">B</span><span>En la suma cero las metas tienen correlación negativa (ganar-perder), mientras que en la integradora se potencian positivamente.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(1, 2, false)"><span class="opt-letter">C</span><span>La suma cero ocurre únicamente en salarios y la integradora en bienes raíces.</span></button>
+    </div>
+    <div class="feedback-box" id="fb-1"></div>
+  </div>
+
+  <div class="q-card" id="q2">
+    <div class="q-header"><span class="q-num">Pregunta 02</span><span class="q-tag">Módulo 1 • Verdadero o Falso</span></div>
+    <div class="q-text">Verdadero o Falso: Según Harold Kelley, el "Dilema de la Confianza" consiste en la tensión de un negociador sobre decidir cuánta verdad propia debe revelarle a la contraparte.</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(2, 0, false)"><span class="opt-letter">V</span><span>Verdadero</span></button>
+      <button class="opt-btn" onclick="checkAnswer(2, 1, true)"><span class="opt-letter">F</span><span>Falso</span></button>
+    </div>
+    <div class="feedback-box" id="fb-2"></div>
+  </div>
+
+  <div class="q-card" id="q3">
+    <div class="q-header"><span class="q-num">Pregunta 03</span><span class="q-tag">Módulo 2 • ZOPA y Límites</span></div>
+    <div class="q-text">Un comprador automotriz tiene como punto de reserva (máximo a pagar) $8.000.000. El vendedor exige mínimo $8.500.000. En este escenario formal:</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(3, 0, false)"><span class="opt-letter">A</span><span>Existe una ZOPA positiva de $500.000, por lo que el acuerdo es inevitable.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(3, 1, true)"><span class="opt-letter">B</span><span>Existe una ZOPA negativa, lo que significa que no habrá acuerdo sin modificar los puntos de resistencia.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(3, 2, false)"><span class="opt-letter">C</span><span>El comprador debe activar una táctica de Nibble.</span></button>
+    </div>
+    <div class="feedback-box" id="fb-3"></div>
+  </div>
+
+  <div class="q-card" id="q4">
+    <div class="q-header"><span class="q-num">Pregunta 04</span><span class="q-tag">Módulo 3 • Verdadero o Falso</span></div>
+    <div class="q-text">Verdadero o Falso: El primer axioma de Paul Watzlawick sostiene que en una mesa de negociación solo comunica aquello que se expresa con palabras verbales o escritos formales.</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(4, 0, false)"><span class="opt-letter">V</span><span>Verdadero</span></button>
+      <button class="opt-btn" onclick="checkAnswer(4, 1, true)"><span class="opt-letter">F</span><span>Falso</span></button>
+    </div>
+    <div class="feedback-box" id="fb-4"></div>
+  </div>
+
+  <div class="q-card" id="q5">
+    <div class="q-header"><span class="q-num">Pregunta 05</span><span class="q-tag">Módulo 3 • Principios de Cialdini</span></div>
+    <div class="q-text">Una empresa entrega un informe de auditoría gratuito que revela fallas operativas antes de presupuestar un servicio. El cliente se muestra receptivo y abierto a negociar. ¿Qué principio operó?</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(5, 0, true)"><span class="opt-letter">A</span><span>Principio de Reciprocidad.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(5, 1, false)"><span class="opt-letter">B</span><span>Principio de Escasez.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(5, 2, false)"><span class="opt-letter">C</span><span>Principio de Simpatía.</span></button>
+    </div>
+    <div class="feedback-box" id="fb-5"></div>
+  </div>
+
+  <div class="q-card" id="q6">
+    <div class="q-header"><span class="q-num">Pregunta 06</span><span class="q-tag">Módulo 1 • Estilos de Conflicto</span></div>
+    <div class="q-text">En el Modelo de Intereses Dobles, cuando un negociador exhibe ALTA reafirmación personal y BAJA cooperación con la contraparte, asume el estilo:</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(6, 0, false)"><span class="opt-letter">A</span><span>Avenencia o Transigencia.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(6, 1, true)"><span class="opt-letter">B</span><span>Luchar, Competir o Dominar.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(6, 2, false)"><span class="opt-letter">C</span><span>Inacción o Evitación.</span></button>
+    </div>
+    <div class="feedback-box" id="fb-6"></div>
+  </div>
+
+  <div class="q-card" id="q7">
+    <div class="q-header"><span class="q-num">Pregunta 07</span><span class="q-tag">Módulo 2 • Tácticas Hardball</span></div>
+    <div class="q-text">Verdadero o Falso: La táctica de presión del "Fingimiento" (Bogey) consiste en simular que un punto irrelevante es de vida o muerte para luego intercambiarlo por una concesión valiosa.</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(7, 0, true)"><span class="opt-letter">V</span><span>Verdadero</span></button>
+      <button class="opt-btn" onclick="checkAnswer(7, 1, false)"><span class="opt-letter">F</span><span>Falso</span></button>
+    </div>
+    <div class="feedback-box" id="fb-7"></div>
+  </div>
+
+  <div class="q-card" id="q8">
+    <div class="q-header"><span class="q-num">Pregunta 08</span><span class="q-tag">Módulo 4 • Marca Personal</span></div>
+    <div class="q-text">¿Cómo impacta estratégicamente una sólida Marca Personal profesional (Ethos) sobre la negociación comercial?</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(8, 0, true)"><span class="opt-letter">A</span><span>Atenúa el dilema de la confianza, reduce el riesgo percibido y puede desplazar el punto de resistencia del cliente a su favor.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(8, 1, false)"><span class="opt-letter">B</span><span>Obliga legalmente a la contraparte a ceder su margen.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(8, 2, false)"><span class="opt-letter">C</span><span>Elimina la necesidad de conocer los intereses de la otra parte.</span></button>
+    </div>
+    <div class="feedback-box" id="fb-8"></div>
+  </div>
+
+  <div class="q-card" id="q9">
+    <div class="q-header"><span class="q-num">Pregunta 09</span><span class="q-tag">Módulo 5 • Caso Roosevelt</span></div>
+    <div class="q-text">En el Caso Roosevelt (1912), ¿cuál fue la jugada maestra de "Reencuadre Estratégico" (Framing) empleada por George Perkins?</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(9, 0, false)"><span class="opt-letter">A</span><span>Confesar la infracción legal y rogar por una tarifa social sin fines de lucro.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(9, 1, true)"><span class="opt-letter">B</span><span>Reencuadrar la situación como una vitrina publicitaria exclusiva y preguntar cuánto pagaría el fotógrafo por ser seleccionado.</span></button>
+      <button class="opt-btn" onclick="checkAnswer(9, 2, false)"><span class="opt-letter">C</span><span>Amenazar con reimprimir los 3 millones de folletos en un diario rival.</span></button>
+    </div>
+    <div class="feedback-box" id="fb-9"></div>
+  </div>
+
+  <div class="q-card" id="q10">
+    <div class="q-header"><span class="q-num">Pregunta 10</span><span class="q-tag">Módulo 3 • Comunicación</span></div>
+    <div class="q-text">Verdadero o Falso: El "Ruido Semántico" se manifiesta cuando el emisor emplea tecnicismos o jergas complejas no compartidas por el receptor, impidiendo la adecuada decodificación del valor.</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkAnswer(10, 0, true)"><span class="opt-letter">V</span><span>Verdadero</span></button>
+      <button class="opt-btn" onclick="checkAnswer(10, 1, false)"><span class="opt-letter">F</span><span>Falso</span></button>
+    </div>
+    <div class="feedback-box" id="fb-10"></div>
+  </div>
+</div>
+
+<script>
+  const explanations = {
+    1: { correct: "¡Excelente! En situaciones distributivas se compite por un recurso fijo de suma cero. En las integradoras, las metas se potencian positivamente para crear valor mutuo (Lewicki Cap 1).", incorrect: "Incorrecto. Recuerda que la distinción central de Lewicki es la correlación de metas: ganar-perder vs. ganar-ganar." },
+    2: { correct: "¡Exacto, es FALSO! La tensión sobre *cuánta verdad propia revelar* es el 'Dilema de la Honestidad'. El 'Dilema de la Confianza' es la duda sobre *cuánto creer* de lo que afirma la otra parte.", incorrect: "Cuidado: Es FALSO. Kelley define el 'Dilema de la Confianza' como decidir cuánto creer de la contraparte." },
+    3: { correct: "¡Muy bien! Si el límite mínimo del vendedor ($8.5M) supera el máximo del comprador ($8.0M), los rangos no se cruzan: es una ZOPA Negativa.", incorrect: "Incorrecto. No hay intersección de precios: la ZOPA es Negativa y no habrá acuerdo sin ajustes." },
+    4: { correct: "¡Correcto, es FALSO! El axioma de Watzlawick postula: *«Es imposible NO comunicar»*. Los silencios, gestos y posturas corporales comunican constantemente.", incorrect: "Es FALSO. La conducta, la postura y el silencio también son mensajes." },
+    5: { correct: "¡Notable! La Reciprocidad es la obligación psicológica universal de retribuir un valor o beneficio recibido previamente (Cialdini).", incorrect: "Incorrecto. Entregar algo de valor sin costo previo apela a la Reciprocidad." },
+    6: { correct: "¡Correcto! Alta preocupación por metas propias y baja cooperación ajena define el estilo Luchar / Competir / Dominar (Lewicki Cap 1).", incorrect: "Incorrecto. Es el estilo Luchar o Competir." },
+    7: { correct: "¡Exacto, es VERDADERO! El Bogey es simular que un punto menor es crítico para usarlo como moneda de cambio posterior.", incorrect: "Es VERDADERO. Lewicki define el Bogey como fingir valor por un asunto secundario." },
+    8: { correct: "¡Excelente! El Ethos reduce el riesgo percibido de la contraparte y aumenta su disposición a pagar, desplazando su punto de resistencia.", incorrect: "Incorrecto. La Marca Personal apalanca la negociación reduciendo la desconfianza previa." },
+    9: { correct: "¡Brillante! Perkins cambió el marco (framing): transformó la infracción en una vitrina publicitaria exclusiva y cobró por ella.", incorrect: "Incorrecto. El reencuadre consistió en transformar la infracción en una venta publicitaria." },
+    10: { correct: "¡Correcto, es VERDADERO! El Ruido Semántico surge de códigos, jergas técnicas y palabras no compartidas que confunden al receptor.", incorrect: "Es VERDADERO. La jerga técnica es el ejemplo clásico de Ruido Semántico." }
+  };
+
+  const answered = new Set();
+  let score = 0;
+
+  function checkAnswer(qNum, optIndex, isCorrect) {
+    if (answered.has(qNum)) return;
+    answered.add(qNum);
+    const card = document.getElementById(`q${qNum}`);
+    const btns = card.querySelectorAll('.opt-btn');
+    const fb = document.getElementById(`fb-${qNum}`);
+
+    btns.forEach((btn, idx) => {
+      btn.classList.add('disabled');
+      if (idx === optIndex) {
+        btn.classList.add(isCorrect ? 'correct-opt' : 'incorrect-opt');
+      }
+    });
+
+    if (isCorrect) {
+      score += 10;
+      fb.className = "feedback-box correct";
+      fb.innerHTML = `<strong> ${explanations[qNum].correct}</strong>`;
+    } else {
+      fb.className = "feedback-box incorrect";
+      fb.innerHTML = `<strong> ${explanations[qNum].incorrect}</strong>`;
+    }
+
+    document.getElementById('answered-count').innerText = answered.size;
+    document.getElementById('score-count').innerText = score;
+  }
+
+  function resetQuiz() {
+    answered.clear();
+    score = 0;
+    document.getElementById('answered-count').innerText = "0";
+    document.getElementById('score-count').innerText = "0";
+    for (let i = 1; i <= 10; i++) {
+      const card = document.getElementById(`q${i}`);
+      const btns = card.querySelectorAll('.opt-btn');
+      const fb = document.getElementById(`fb-${i}`);
+      btns.forEach(btn => btn.className = "opt-btn");
+      fb.className = "feedback-box";
+      fb.innerHTML = "";
+    }
+  }
+</script>
+</body>
+</html>
