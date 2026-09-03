@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNA1103 - Compendio Teórico Integral: EA1 Comunicación y Persuasión | Duoc UC</title>
+<style>
+  :root {
+    --duoc-blue: #002B49;
+    --duoc-navy: #001A2E;
+    --duoc-yellow: #FFAA00;
+    --duoc-yellow-hover: #FFB81C;
+    --text-dark: #1E293B;
+    --text-muted: #64748B;
+    --bg-light: #F8FAFC;
+    --card-border: #E2E8F0;
+    --accent-blue: #0284C7;
+    --accent-teal: #0D9488;
+    --accent-amber: #D97706;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body {
+    background-color: #0F172A;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 15px;
+    min-height: 100vh;
+  }
+
+  .doc-container {
+    width: 100%;
+    max-width: 1150px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    padding: 50px 60px;
+    margin-bottom: 40px;
+  }
+
+  .header-box {
+    border-bottom: 3px solid var(--duoc-yellow);
+    padding-bottom: 25px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .header-left h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--duoc-blue);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .header-left p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .header-badge {
+    background: var(--duoc-blue);
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .header-badge span {
+    color: var(--duoc-yellow);
+    display: block;
+    font-size: 1.15rem;
+  }
+
+  .header-badge small {
+    display: block;
+    color: #CBD5E1;
+    font-size: 0.8rem;
+    margin-top: 4px;
+  }
+
+  .intro-callout {
+    background: var(--bg-light);
+    border-left: 5px solid var(--duoc-blue);
+    padding: 18px 24px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 35px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #334155;
+  }
+
+  .intro-callout strong {
+    color: var(--duoc-blue);
+  }
+
+  .module-card {
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+
+  .module-header {
+    background: linear-gradient(135deg, var(--duoc-blue) 0%, var(--duoc-navy) 100%);
+    color: #FFFFFF;
+    padding: 16px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .module-header h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+
+  .module-tag {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--duoc-yellow);
+  }
+
+  .module-body {
+    padding: 28px 32px;
+  }
+
+  .concept-block {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #F1F5F9;
+  }
+
+  .concept-block:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .concept-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--duoc-blue);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .concept-desc {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #334155;
+  }
+
+  .concept-desc ul {
+    margin-left: 22px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .concept-desc strong {
+    color: #0F172A;
+  }
+
+  .highlight-box {
+    background: #FFFBEB;
+    border-left: 4px solid var(--duoc-yellow);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #78350F;
+    line-height: 1.55;
+  }
+
+  .actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1150px;
+  }
+
+  .back-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--card-border);
+    color: var(--duoc-blue);
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background: var(--duoc-blue);
+    color: #FFFFFF;
+  }
+
+  .print-btn {
+    background: var(--duoc-yellow);
+    color: var(--duoc-navy);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .print-btn:hover {
+    background: var(--duoc-yellow-hover);
+    transform: translateY(-2px);
+  }
+
+  @media print {
+    body { background: #FFFFFF; padding: 0; }
+    .doc-container { box-shadow: none; padding: 0; max-width: 100%; }
+    .actions-bar { display: none; }
+    .module-card { page-break-inside: avoid; margin-bottom: 25px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="actions-bar">
+  <a href="index.html" class="back-btn">◀ Volver al Portal Hub</a>
+  <button class="print-btn" onclick="window.print()"> Imprimir o Guardar en PDF</button>
+</div>
+
+<div class="doc-container">
+
+  <!-- HEADER -->
+  <div class="header-box">
+    <div class="header-left">
+      <h1>COMPENDIO TEÓRICO INTEGRAL: EA1</h1>
+      <p>Comunicación Estratégica, Persuasión y Fundamentos de Negociación</p>
+    </div>
+    <div class="header-badge">
+      DUOC UC
+      <span>VNA1103 Negociación</span>
+      <small>Docente: Fabián Urbina Peña • f.urbinap@profesor.duoc.cl</small>
+    </div>
+  </div>
+
+  <div class="intro-callout">
+    <strong>Material de Estudio Oficial:</strong> Compendio estructurado de conceptos clave, definiciones formales y modelos estratégicos requeridos para la <strong>Evaluación Formativa 1</strong> y la <strong>Evaluación Parcial 1</strong>. Basado en la bibliografía oficial (Lewicki, Saunders, Barry, Cialdini, Watzlawick y Kelley).
+  </div>
+
+  <!-- MÓDULO 1 -->
+  <div class="module-card">
+    <div class="module-header">
+      <h2>MÓDULO 1: Fundamentos Estructurales de la Negociación</h2>
+      <span class="module-tag">Lewicki, Cap. 1</span>
+    </div>
+    <div class="module-body">
+      <div class="concept-block">
+        <div class="concept-title">1. Definición Formal de Negociación y Concertación</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Negociación:</strong> Forma de toma de decisiones en la que dos o más partes interdependientes conversan y buscan conciliar intereses contrarios o divergentes con el propósito de llegar a un acuerdo.</li>
+            <li><strong>Concertación / Regateo (Bargaining):</strong> Describe situaciones de carácter puramente competitivo (ganar-perder), orientadas exclusivamente a la distribución de un recurso fijo o precio.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">2. Interdependencia y Tipos de Relaciones</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Partes Independientes:</strong> Aquellas que pueden satisfacer sus necesidades de forma autónoma sin la intervención o apoyo de otros.</li>
+            <li><strong>Partes Dependientes:</strong> Aquellas que deben supeditarse a las decisiones y cooperación de un tercero para alcanzar sus objetivos.</li>
+            <li><strong>Partes Interdependientes:</strong> Aquellas que tienen metas vinculadas y se necesitan mutuamente para lograr sus objetivos; el resultado posible de trabajar juntos es superior al de actuar por separado.</li>
+            <li><strong>Suma Cero / Distributivas:</strong> Metas correlacionadas negativamente; lo que una parte gana, la otra lo pierde de forma directa de un recurso limitado.</li>
+            <li><strong>Suma No Cero / Integradoras:</strong> Correlación positiva entre metas; el logro del objetivo de una potencia el de la otra (creación de valor).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">3. Factores Tangibles e Intangibles</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Factores Tangibles:</strong> Aspectos cuantitativos y contractuales de la negociación (precio nominal, plazos de entrega, garantías, tasas de interés, condiciones de pago).</li>
+            <li><strong>Factores Intangibles:</strong> Motivaciones psicológicas y emocionales subyacentes (necesidad de reconocimiento, estatus, imagen ante pares, reputación, percepción de justicia o temor a ser manipulado).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">4. Los Dos Dilemas del Negociador (Harold Kelley, 1966)</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Dilema de la Honestidad:</strong> Tensión sobre cuánta verdad revelar. Revelar todo arriesga ser explotado; no revelar nada arriesga el estancamiento de la negociación por falta de información.</li>
+            <li><strong>Dilema de la Confianza:</strong> Tensión sobre cuánto creer de la contraparte. Creer todo expone a manipulación o engaño; no creer nada bloquea el acuerdo por desconfianza defensiva.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">5. Modelo de Intereses Dobles (Rubin, Pruitt y Kim)</div>
+        <div class="concept-desc">
+          <p>Evalúa la conducta según dos dimensiones: <strong>Reafirmación</strong> (interés en resultados propios) y <strong>Cooperación</strong> (interés en resultados del otro):</p>
+          <ul>
+            <li><strong>1. Luchar / Competir / Dominar (Alta reafirmación, baja cooperación):</strong> Imponer metas propias sin importar el costo en la contraparte.</li>
+            <li><strong>2. Ceder / Aceptar (Baja reafirmación, alta cooperación):</strong> Subordinar intereses propios para priorizar la satisfacción ajena y preservar la relación.</li>
+            <li><strong>3. Inacción / Evitar (Baja reafirmación, baja cooperación):</strong> Retiro o pasividad; no se persiguen los objetivos propios ni los ajenos.</li>
+            <li><strong>4. Resolución de Problemas / Integrar (Alta reafirmación, alta cooperación):</strong> Maximizar el resultado conjunto mediante colaboración.</li>
+            <li><strong>5. Avenencia / Transigir (Nivel intermedio de ambos):</strong> Solución de compromiso rápido donde ambas partes ceden parcialmente.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÓDULO 2 -->
+  <div class="module-card">
+    <div class="module-header">
+      <h2>MÓDULO 2: Dinámica de la Negociación Distributiva</h2>
+      <span class="module-tag">Lewicki, Cap. 2</span>
+    </div>
+    <div class="module-body">
+      <div class="concept-block">
+        <div class="concept-title">1. Variables Financieras y Límites</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Precio Solicitado (Asking Price):</strong> Postura inicial o precio de lista establecido por el vendedor.</li>
+            <li><strong>Oferta Inicial:</strong> Primera propuesta cuantitativa formal realizada por el comprador.</li>
+            <li><strong>Punto Objetivo (Aspiración):</strong> Resultado óptimo que un negociador espera alcanzar de manera realista.</li>
+            <li><strong>Punto de Resistencia (Precio de Reserva):</strong> Límite final innegociable más allá del cual se abandona la mesa.</li>
+            <li><strong>ZOPA (Zona de Posible Acuerdo):</strong> Espacio entre los puntos de resistencia. Positiva si el límite del comprador es superior al mínimo del vendedor; Negativa si no hay intersección.</li>
+            <li><strong>MAPAN / BATNA:</strong> Mejor Alternativa a un Acuerdo Negociado. Principal fuente de poder de retiro independiente.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">2. Tácticas de Posición y Presión Comunes (Hardball Tactics)</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Policía Bueno / Policía Malo:</strong> Alternar agresividad y cordialidad para forzar concesiones. Contrarrestar visibilizando la táctica.</li>
+            <li><strong>Bola Baja / Bola Alta (Oferta extrema inicial):</strong> Apertura fuera de rango para anclar la mesa. Contrarrestar exigiendo datos de mercado antes de responder.</li>
+            <li><strong>Fingimiento (Bogey):</strong> Simular que un asunto irrelevante es crítico para luego intercambiarlo por concesiones valiosas.</li>
+            <li><strong>Tanteo (Nibble):</strong> Pedir una concesión pequeña al momento del cierre. Contrarrestar preguntando qué más falta o exigiendo contra-concesión.</li>
+            <li><strong>Atosigamiento (Snow Job):</strong> Abrumar con información técnica para confundir. Responder pidiendo resúmenes ejecutivos e inconsistencias.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÓDULO 3 -->
+  <div class="module-card">
+    <div class="module-header">
+      <h2>MÓDULO 3: Comunicación Efectiva y Persuasión Comercial</h2>
+      <span class="module-tag">Watzlawick & Cialdini</span>
+    </div>
+    <div class="module-body">
+      <div class="concept-block">
+        <div class="concept-title">1. Circuito Comunicacional y Ruidos</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Ruido Semántico:</strong> Jerga técnica excesiva o ambigüedades que generan malentendidos.</li>
+            <li><strong>Ruido Psicológico / Emocional:</strong> Desconfianza, defensividad, prejuicios o estrés que distorsionan el mensaje.</li>
+            <li><strong>Axioma de Watzlawick:</strong> <em>«Es imposible no comunicar»</em>. En negociación, el silencio, el lenguaje corporal y los tiempos de respuesta también comunican una postura.</li>
+            <li><strong>Tríada Clásica:</strong> <strong>Ethos</strong> (credibilidad y autoridad), <strong>Pathos</strong> (conexión emocional y empatía), <strong>Logos</strong> (lógica, números y evidencia).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">2. Los 7 Principios de Influencia de Robert Cialdini</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>1. Reciprocidad:</strong> Obligación psicológica de retribuir un valor previo (auditorías iniciales, estudios de mercado gratuitos).</li>
+            <li><strong>2. Simpatía / Empatía:</strong> Mayor disposición a acordar con quienes comprenden nuestros problemas y comparten visiones afines.</li>
+            <li><strong>3. Compromiso y Coherencia:</strong> Necesidad de actuar de forma consistente con declaraciones previas (micro-acuerdos progresivos).</li>
+            <li><strong>4. Autoridad:</strong> Confianza en credenciales comprobadas, certificaciones técnicas (Google, ISO) y marcas líderes.</li>
+            <li><strong>5. Prueba Social (Consenso):</strong> Validación de decisiones complejas observando resultados de pares en la industria (casos de éxito).</li>
+            <li><strong>6. Escasez:</strong> Mayor valoración de oportunidades exclusivas, con cupos limitados o acotadas en tiempo de forma real.</li>
+            <li><strong>7. Unidad:</strong> Sentido de identidad compartida («somos parte del mismo sector o visión»).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÓDULO 4 -->
+  <div class="module-card">
+    <div class="module-header">
+      <h2>MÓDULO 4: Marca Personal como Activo de Negociación</h2>
+      <span class="module-tag">Actividad 1.2 • Social Selling B2B</span>
+    </div>
+    <div class="module-body">
+      <div class="concept-block">
+        <div class="concept-title">1. Apalancamiento de la Marca Personal en la Mesa</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Reduce el Dilema de la Confianza:</strong> Mitiga las sospechas iniciales de la contraparte antes del primer contacto.</li>
+            <li><strong>Desplaza el Punto de Resistencia:</strong> Al percibir menor riesgo operativo, el cliente aumenta su disposición a pagar.</li>
+            <li><strong>Fortalece la MAPAN Percibida:</strong> Proyecta alta demanda y alternativas sólidas en el mercado laboral o comercial.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-block">
+        <div class="concept-title">2. Estructura de Perfil Comercial en LinkedIn</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Titular con Propuesta de Valor:</strong> Fórmula: <code>[Especialidad/Rol] + [Público Objetivo/Nicho] + [Problema que resuelves / Beneficio]</code>.</li>
+            <li><strong>Extracto en 3 Actos:</strong> Acto 1 (problema crítico del mercado / pain points), Acto 2 (metodología y herramientas de solución), Acto 3 (Call to Action claro para conectar).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÓDULO 5 -->
+  <div class="module-card">
+    <div class="module-header">
+      <h2>MÓDULO 5: Conceptos Clave del Caso Roosevelt</h2>
+      <span class="module-tag">Actividad 1.3 • Método de Casos</span>
+    </div>
+    <div class="module-body">
+      <div class="concept-block">
+        <div class="concept-title">1. Reencuadre y Estrategia Integrativa</div>
+        <div class="concept-desc">
+          <ul>
+            <li><strong>Reencuadre Estratégico (Reframing):</strong> Modificar el marco de referencia de un conflicto (pasar de infractor acorralado a comprador con opciones publicitarias masivas).</li>
+            <li><strong>Incoherencia de Valores:</strong> Descubrir elementos de costo marginal casi nulo para una parte (vitrina publicitaria) pero de inmenso valor intangible para la otra (prestigio y ego).</li>
+            <li><strong>Engaño por Omisión (Lewicki Cap. 8):</strong> Táctica donde no se dicen falsedades explícitas, pero se oculta deliberadamente información sustantiva (Perkins no reveló que los folletos ya estaban impresos).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
