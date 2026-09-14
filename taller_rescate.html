@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller de Autorreflexión - Negociación VNA1103</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 2rem;
+    }
+
+    /* Encabezado */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .title-group h1 span {
+      color: var(--accent-yellow);
+    }
+
+    .title-group p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .badge-reward {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 800;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Banner de Reglas */
+    .rules-banner {
+      background-color: #03456c;
+      border-left: 4px solid var(--accent-blue);
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .rules-banner strong {
+      color: #ffffff;
+    }
+
+    /* Grilla de 4 Pasos */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .step-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .step-card.highlight {
+      border-color: #38bdf8;
+      background: linear-gradient(180deg, #1e293b 0%, #172554 100%);
+    }
+
+    .step-number {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-blue);
+      margin-bottom: 0.35rem;
+    }
+
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.4rem;
+    }
+
+    .step-content {
+      font-size: 0.88rem;
+      line-height: 1.35;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .step-content ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .step-content li {
+      position: relative;
+      padding-left: 1.1rem;
+    }
+
+    .step-content li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-yellow);
+      font-weight: bold;
+    }
+
+    .step-content strong {
+      color: #ffffff;
+    }
+
+    .alert-box {
+      margin-top: auto;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      border-left: 3px solid var(--accent-yellow);
+    }
+
+    /* Footer de Criterio */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0b1120;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.6rem 1.25rem;
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+    }
+
+    .criteria-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-green { background-color: var(--accent-green); }
+    .dot-yellow { background-color: var(--accent-yellow); }
+    .dot-red { background-color: #ef4444; }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+    <div class="title-group">
+      <h1>TALLER EN SALA: <span>AUTORREFLEXIÓN Y RESCATE EP1</span></h1>
+      <p>Asignatura: Negociación (VNA1103) • Análisis Activo de Feedback y Mejora Continua</p>
+    </div>
+    <div class="badge-reward">
+      Recompensa: +1,0 Punto a la Nota
+    </div>
+  </header>
+
+  <!-- Barra de Condiciones -->
+  <div class="rules-banner">
+    <div>
+      ✍️ <strong>Condición Estricta:</strong> 100% manuscrito en hoja de cuaderno • Trabajo individual • <strong>Se entrega al sonar el timbre</strong>.
+    </div>
+    <div>
+      📌 <strong>Encabezado obligatorio en tu hoja:</strong> Nombre Completo | RUT | <strong>Forma (A, B o C)</strong>
+    </div>
+  </div>
+
+  <!-- Grilla de Pasos Unificada -->
+  <main class="grid-container">
+
+    <!-- PASO 1 -->
+    <div class="step-card">
+      <div class="step-number">Paso 01</div>
+      <div class="step-title">Autodiagnóstico</div>
+      <div class="step-content">
+        <p>Analiza con calma tu desempeño y redacta un diagnóstico honesto de <strong>3 a 5 líneas</strong>:</p>
+        <ul>
+          <li>¿Cuál fue tu puntaje y qué preguntas te costaron más?</li>
+          <li>Mirando la corrección: ¿fallaste por <strong>falta de conceptos</strong>, por <strong>leer apurado el caso</strong>, o por <strong>tener la idea pero no saber fundamentarla</strong>?</li>
+        </ul>
+        <div class="alert-box">
+          Sé autocrítico: reconocer la causa raíz es el primer paso para negociar mejor.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="step-card highlight">
+      <div class="step-number">Paso 02 (Núcleo)</div>
+      <div class="step-title">Rescate de 2 Preguntas</div>
+      <div class="step-content">
+        <p>Elige las <strong>dos preguntas con menor puntaje</strong> de tu prueba y desglosa cada una:</p>
+        <ul>
+          <li><strong>a) ¿Qué respondí?</strong> Resumen honesto de tu texto original.</li>
+          <li><strong>b) ¿Dónde estuvo el error?</strong> Qué te marcó el feedback del profe.</li>
+          <li><strong>c) Respuesta definitiva:</strong> Redáctala completa y correcta aplicando la materia (ZOPA, Intereses, Ruidos, Hardball, Cialdini, Ética).</li>
+        </ul>
+        <div class="alert-box">
+          No copies la pauta textual: explica el razonamiento con tus palabras.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="step-card">
+      <div class="step-number">Paso 03</div>
+      <div class="step-title">Glosario Personal</div>
+      <div class="step-content">
+        <p>Selecciona los <strong>3 conceptos técnicos</strong> que más te costaron o que confundiste:</p>
+        <ul>
+          <li><em>Ejemplos:</em> ZOPA Negativa, MAPAN, Ruido Semántico, Táctica Nibble, Dilemas de Kelley, Reencuadre (Framing).</li>
+          <li>Escribe la <strong>definición</strong> con tus propias palabras.</li>
+          <li>Describe un <strong>ejemplo real o laboral</strong> (diferente al de la prueba).</li>
+        </ul>
+        <div class="alert-box">
+          Demuestra que el concepto ya forma parte de tu caja de herramientas.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4 -->
+    <div class="step-card">
+      <div class="step-number">Paso 04</div>
+      <div class="step-title">Plan de Acción</div>
+      <div class="step-content">
+        <p>Compromiso concreto para la <strong>Evaluación Parcial 2</strong> (2 a 3 líneas):</p>
+        <ul>
+          <li>¿Qué técnica específica implementarás antes de la próxima evaluación?</li>
+          <li><em>Opciones:</em> Armar esquemas previos de conceptos, practicar cálculo de límites, participar en los casos en sala.</li>
+        </ul>
+        <div class="alert-box">
+          Un negociador profesional ajusta su estrategia tras cada resultado.
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer con Criterios de Evaluación -->
+  <footer>
+    <span style="color: var(--text-muted); font-weight: 600;">Criterio de Asignación:</span>
+    <div class="criteria-item">
+      <span class="dot dot-green"></span>
+      <span><strong>+1,0 Punto:</strong> 4 pasos completos, preguntas rehechas a fondo y ejemplos propios.</span>
+    </div>
+    <div class="criteria-item">
+      <span class="dot dot-yellow"></span>
+      <span><strong>+0,5 Punto:</strong> Parcial, respuestas breves o copia textual sin análisis.</span>
+    </div>
+    <div class="criteria-item">
+      <span class="dot dot-red"></span>
+      <span><strong>0,0 Puntos:</strong> Hoja incompleta, copia entre compañeros o no entrega en sala.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
