@@ -158,53 +158,6 @@
       line-height: 1.4;
     }
 
-    /* Estilo para lista de archivos y documentos históricos */
-    .archive-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-
-    .archive-item {
-      background-color: rgba(30, 41, 59, 0.6);
-      border: 1px dashed var(--card-border);
-      border-radius: 8px;
-      padding: 1rem;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      transition: all 0.2s ease;
-    }
-
-    .archive-item:hover {
-      border-color: var(--accent-blue);
-      background-color: var(--card-bg);
-      transform: translateY(-1px);
-    }
-
-    .archive-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .archive-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .archive-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #f1f5f9;
-    }
-
-    .archive-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
     footer {
       border-top: 1px solid var(--card-border);
       margin-top: 3rem;
@@ -218,7 +171,7 @@
       body {
         padding: 1rem;
       }
-      .grid-links, .archive-grid {
+      .grid-links {
         grid-template-columns: 1fr;
       }
     }
@@ -230,7 +183,7 @@
   <header>
     <div class="header-title">
       <h1>NEGOCIACIÓN <span>VNA1103</span></h1>
-      <p>Repositorio Central de Recursos y Actividades • Duoc UC</p>
+      <p>Portal de Recursos de Aprendizaje • Duoc UC</p>
     </div>
     <div class="badge-docente">
       Profesor Fabián Urbina Peña
@@ -239,85 +192,52 @@
 
   <main>
 
-    <!-- ZONA ACTIVA: Experiencia de Aprendizaje 2 -->
+    <!-- EA2: Estilos de Negociación -->
     <section>
-      <div class="section-title">En Curso: EA2 - Estilos y Modelos de Negociación</div>
+      <div class="section-title">EA2: Estilos y Modelos de Negociación</div>
       <div class="grid-links">
         
-        <!-- Taller en Papelógrafo EA2 -->
+        <!-- Taller Papelógrafo EA2 -->
         <a href="taller_ea2_ring.html" class="card-link highlight">
-          <div class="card-tag tag-yellow">Taller en Sala • Papelógrafos</div>
+          <div class="card-tag tag-yellow">Actividad en Sala • Papelógrafo</div>
           <div class="card-name">El Ring de los Paradigmas</div>
-          <div class="card-desc">Contraste visual: Negociación Distributiva vs. Integradora (Harvard), caso del auto usado y persuasión de Cialdini.</div>
+          <div class="card-desc">Taller práctico: Negociación Distributiva vs. Integradora (Harvard), el desafío del auto usado y persuasión aplicada.</div>
         </a>
-
-        <!-- Caso Bancorp (Role-Playing) -->
-        <div class="card-link" style="opacity: 0.85;">
-          <div class="card-tag tag-green">Simulación Práctica • Duplas</div>
-          <div class="card-name">Caso Bancorp (Vallas Publicitarias)</div>
-          <div class="card-desc">Preparación para el role-playing: compra y venta de espacios publicitarios, estacionalidad y límites financieros.</div>
-        </div>
 
       </div>
     </section>
 
-    <!-- ZONA DE CIERRE: Experiencia de Aprendizaje 1 -->
+    <!-- Materiales Formativos y de Estudio Permanente -->
     <section>
-      <div class="section-title muted">Evaluación Parcial 1: Cierre y Rescate</div>
+      <div class="section-title muted">Herramientas de Estudio y Práctica</div>
       <div class="grid-links">
-        
-        <!-- Lámina de Rescate EP1 -->
-        <a href="taller_rescate.html" class="card-link">
-          <div class="card-tag">Taller de Mejora Continua</div>
-          <div class="card-name">Ficha de Autorreflexión (+1,0 Punto)</div>
-          <div class="card-desc">Instrucciones proyectables para la revisión activa y manuscrita de la Evaluación Parcial 1. Entrega a las 15:00 hrs.</div>
-        </a>
 
-        <!-- Compendio Teórico Base EA1 -->
+        <!-- Compendio Teórico -->
         <a href="compendio-teorico.html" class="card-link">
-          <div class="card-tag">Base Normativa EA1</div>
-          <div class="card-name">Compendio Teórico Institucional</div>
-          <div class="card-desc">Definiciones teóricas de la asignatura: Lewicki (Caps. 1, 2 y 8), axiomas de Watzlawick, Kelley y Cialdini.</div>
+          <div class="card-tag">Marco Conceptual</div>
+          <div class="card-name">Compendio Teórico</div>
+          <div class="card-desc">Glosario formal de negociación: Lewicki, axiomas de Watzlawick, dilemas de Kelley y principios de Cialdini.</div>
         </a>
 
-      </div>
-    </section>
-
-    <!-- ZONA HISTÓRICA / REPOSITORIO PERMANENTE -->
-    <section>
-      <div class="section-title muted" style="font-size: 1.05rem;">Archivo y Materiales de Consulta Permanente</div>
-      <div class="archive-grid">
-
-        <a href="EA1.pdf" class="archive-item" target="_blank">
-          <div class="archive-icon">📄</div>
-          <div class="archive-info">
-            <span class="archive-title">EA1.pdf (Marco Teórico)</span>
-            <span class="archive-sub">Lectura y definiciones oficiales</span>
-          </div>
+        <!-- Guía de Estudio -->
+        <a href="guia-estudio.html" class="card-link">
+          <div class="card-tag">Guía Práctica</div>
+          <div class="card-name">Guía de Estudio</div>
+          <div class="card-desc">Orientaciones metodológicas, síntesis de contenidos y esquemas de preparación para evaluaciones.</div>
         </a>
 
-        <a href="pauta_ea1.html" class="archive-item">
-          <div class="archive-icon">📋</div>
-          <div class="archive-info">
-            <span class="archive-title">Pauta de Corrección EA1</span>
-            <span class="archive-sub">Criterios de evaluación Formas A, B y C</span>
-          </div>
+        <!-- Simulador Diagnóstico EA1 -->
+        <a href="simulador_diagnostico_ea1.html" class="card-link">
+          <div class="card-tag tag-green">Autoevaluación Interactiva</div>
+          <div class="card-name">Simulador Diagnóstico EA1</div>
+          <div class="card-desc">Plataforma interactiva para autoevaluar conceptos clave, límites numéricos, ruidos comunicacionales y dilemas.</div>
         </a>
 
-        <a href="casos_ea1.html" class="archive-item">
-          <div class="archive-icon">📂</div>
-          <div class="archive-info">
-            <span class="archive-title">Casos Analíticos EA1</span>
-            <span class="archive-sub">Enunciados y detonantes prácticos</span>
-          </div>
-        </a>
-
-        <a href="rubrica_v13.html" class="archive-item">
-          <div class="archive-icon">📊</div>
-          <div class="archive-info">
-            <span class="archive-title">Rúbrica Oficial (100 Pts)</span>
-            <span class="archive-sub">Escala analítica de 6 preguntas Duoc UC</span>
-          </div>
+        <!-- Mini Casos -->
+        <a href="mini-casos.html" class="card-link">
+          <div class="card-tag">Casos de Aplicación</div>
+          <div class="card-name">Mini-Casos Prácticos</div>
+          <div class="card-desc">Situaciones de negociación abreviadas para entrenamiento en toma de decisiones y detección de variables.</div>
         </a>
 
       </div>
