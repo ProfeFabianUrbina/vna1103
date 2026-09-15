@@ -1,372 +1,243 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VNA1103 - Portal Interactivo de Negociación | Duoc UC</title>
-<style>
-  :root {
-    --duoc-blue: #002B49;
-    --duoc-navy: #001A2E;
-    --duoc-yellow: #FFAA00;
-    --duoc-yellow-hover: #FFB81C;
-    --text-dark: #1E293B;
-    --text-muted: #64748B;
-    --bg-main: #0F172A;
-    --card-bg: #FFFFFF;
-    --border-subtle: #E2E8F0;
-    --accent-blue: #0284C7;
-    --accent-teal: #0D9488;
-    --accent-emerald: #059669;
-    --accent-amber: #D97706;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNA1103 - Negociación | Portal de Asignatura</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-  body {
-    background-color: var(--bg-main);
-    color: var(--text-dark);
-    min-height: 100vh;
-    padding: 40px 20px 60px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 2rem;
+    }
 
-  .hub-container {
-    width: 100%;
-    max-width: 1200px;
-  }
+    header {
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
-  .hub-header {
-    background: linear-gradient(135deg, var(--duoc-blue) 0%, var(--duoc-navy) 100%);
-    border-radius: 20px;
-    padding: 35px 45px;
-    color: #FFFFFF;
-    margin-bottom: 35px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+    .header-title h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
 
-  .header-content h1 {
-    font-size: 2.3rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
-  }
+    .header-title h1 span {
+      color: var(--accent-yellow);
+    }
 
-  .header-content h1 span {
-    color: var(--duoc-yellow);
-  }
+    .header-title p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
 
-  .header-content p {
-    font-size: 1.1rem;
-    color: #CBD5E1;
-    max-width: 680px;
-    line-height: 1.5;
-  }
+    .badge-docente {
+      background-color: #1e293b;
+      border: 1px solid var(--accent-blue);
+      color: var(--accent-blue);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
 
-  .header-badge {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 16px 24px;
-    border-radius: 14px;
-    text-align: right;
-  }
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      flex: 1;
+    }
 
-  .header-badge .course-code {
-    font-size: 1.4rem;
-    font-weight: 900;
-    color: var(--duoc-yellow);
-    display: block;
-  }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-  .header-badge .teacher-info {
-    font-size: 0.95rem;
-    color: #FFFFFF;
-    font-weight: 700;
-    margin-top: 4px;
-    display: block;
-  }
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 1.2rem;
+      background-color: var(--accent-yellow);
+      border-radius: 2px;
+    }
 
-  .header-badge .teacher-mail {
-    font-size: 0.85rem;
-    color: #94A3B8;
-    font-weight: 500;
-    display: block;
-    margin-top: 2px;
-  }
+    .grid-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
 
-  .section-label {
-    color: #94A3B8;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    font-weight: 800;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+    .card-link {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: all 0.2s ease-in-out;
+      position: relative;
+    }
 
-  .hub-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 24px;
-    margin-bottom: 35px;
-  }
+    .card-link:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.15);
+    }
 
-  .hub-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border-subtle);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-  }
+    .card-link.highlight {
+      border-color: var(--accent-yellow);
+      background: linear-gradient(180deg, #1e293b 0%, #291e0f 100%);
+    }
 
-  .hub-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.35);
-    border-color: #CBD5E1;
-  }
+    .card-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-blue);
+    }
 
-  .hub-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6px;
-  }
+    .card-tag.tag-yellow {
+      color: var(--accent-yellow);
+    }
 
-  .hub-card.card-simulador::before { background: var(--accent-emerald); }
-  .hub-card.card-compendio::before { background: var(--accent-blue); }
-  .hub-card.card-casos::before { background: var(--accent-amber); }
-  .hub-card.card-guia::before { background: var(--accent-teal); }
+    .card-tag.tag-green {
+      color: var(--accent-green);
+    }
 
-  .card-top {
-    margin-bottom: 20px;
-  }
+    .card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
 
-  .card-tags {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
+    .card-desc {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
 
-  .tag {
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+    footer {
+      border-top: 1px solid var(--card-border);
+      margin-top: 2rem;
+      padding-top: 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
 
-  .tag.ea-tag { background: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; }
-  .tag.quiz-tag { background: #D1FAE5; color: #065F46; }
-  .tag.study-tag { background: #DCFCE7; color: #166534; }
-  .tag.active-tag { background: #FEF3C7; color: #92400E; }
-
-  .card-title {
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: var(--duoc-blue);
-    margin-bottom: 10px;
-    line-height: 1.3;
-  }
-
-  .card-desc {
-    font-size: 0.98rem;
-    color: #475569;
-    line-height: 1.55;
-  }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 18px;
-    margin-top: 15px;
-  }
-
-  .card-meta {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .card-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--duoc-blue);
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 9px 18px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    transition: all 0.2s ease;
-  }
-
-  .card-btn:hover {
-    background: var(--duoc-yellow);
-    color: var(--duoc-navy);
-  }
-
-  .card-btn.emerald-btn {
-    background: var(--accent-emerald);
-  }
-  .card-btn.emerald-btn:hover {
-    background: #047857;
-    color: #FFFFFF;
-  }
-
-  .card-btn.blue-btn {
-    background: var(--accent-blue);
-  }
-  .card-btn.blue-btn:hover {
-    background: #0369A1;
-    color: #FFFFFF;
-  }
-
-  .card-btn.teal-btn {
-    background: var(--accent-teal);
-  }
-  .card-btn.teal-btn:hover {
-    background: #0F766E;
-    color: #FFFFFF;
-  }
-
-  .hub-footer-callout {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
-    padding: 20px 25px;
-    color: #94A3B8;
-    font-size: 0.9rem;
-    text-align: center;
-    line-height: 1.5;
-  }
-
-  .hub-footer-callout strong {
-    color: #E2E8F0;
-  }
-</style>
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+      .grid-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="hub-container">
-
-  <!-- HEADER -->
-  <header class="hub-header">
-    <div class="header-content">
-      <h1>Portal Interactivo de <span>Negociación</span></h1>
-      <p>Hub central de simulaciones interactivas, presentaciones con temporizador y guías de estudio de casos para las sesiones presenciales y trabajo autónomo.</p>
+  <!-- Encabezado -->
+  <header>
+    <div class="header-title">
+      <h1>NEGOCIACIÓN <span>VNA1103</span></h1>
+      <p>Repositorio de Recursos y Actividades de Aprendizaje • Duoc UC</p>
     </div>
-    <div class="header-badge">
-      <span class="course-code">VNA1103 Negociación</span>
-      <span class="teacher-info">Docente Fabián Urbina Peña</span>
-      <span class="teacher-mail">f.urbinap@profesor.duoc.cl</span>
+    <div class="badge-docente">
+      Profesor Fabián Urbina Peña
     </div>
   </header>
 
-  <!-- SECCIÓN EA1 -->
-  <div class="section-label">📌 Recursos Oficiales de Aprendizaje • Experiencia 1</div>
-  
-  <div class="hub-grid">
+  <main>
 
-    <!-- RECURSO 1: SIMULADOR DE AUTOEVALUACIÓN -->
-    <div class="hub-card card-simulador">
-      <div class="card-top">
-        <div class="card-tags">
-          <span class="tag ea-tag">Experiencia de Aprendizaje 1</span>
-          <span class="tag quiz-tag">📝 Test Interactivo</span>
+    <!-- Experiencia de Aprendizaje 2 -->
+    <section>
+      <div class="section-title">Experiencia de Aprendizaje 2: Estilos y Modelos de Negociación</div>
+      <div class="grid-links">
+        
+        <!-- Taller en Papelógrafo EA2 -->
+        <a href="taller_ea2_ring.html" class="card-link highlight">
+          <div class="card-tag tag-yellow">Actividad en Sala • Papelógrafos</div>
+          <div class="card-name">El Ring de los Paradigmas</div>
+          <div class="card-desc">Taller práctico presencial: análisis comparativo entre negociación distributiva e integradora (Harvard), caso del auto usado y aplicación de Cialdini.</div>
+        </a>
+
+        <!-- Material de Simulación Futuro -->
+        <div class="card-link" style="opacity: 0.75; cursor: default;">
+          <div class="card-tag tag-green">Próxima Sesión • Role Playing</div>
+          <div class="card-name">Caso Bancorp</div>
+          <div class="card-desc">Simulación comercial en duplas: negociación de espacios publicitarios, estacionalidad y márgenes de descuento.</div>
         </div>
-        <h2 class="card-title">Simulador Diagnóstico EA1 (Autoevaluación)</h2>
-        <p class="card-desc">10 preguntas de selección múltiple y verdadero/falso sobre Lewicki, Cialdini, Kelley y Caso Roosevelt. Entrega retroalimentación inmediata y puntaje acumulado.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-meta">10 Preguntas • Feedback en vivo</span>
-        <a href="simulador_diagnostico_ea1.html" class="card-btn emerald-btn">Iniciar Test ➔</a>
-      </div>
-    </div>
 
-    <!-- RECURSO 2: COMPENDIO TEÓRICO INTEGRAL -->
-    <div class="hub-card card-compendio">
-      <div class="card-top">
-        <div class="card-tags">
-          <span class="tag ea-tag">Experiencia de Aprendizaje 1</span>
-          <span class="tag study-tag">📖 Glosario Oficial</span>
-        </div>
-        <h2 class="card-title">Guía y Compendio Teórico Integral EA1</h2>
-        <p class="card-desc">Resumen estructurado con todos los módulos de la EA1: Lewicki (Cap 1 y 2), Cialdini, Watzlawick, Dilemas de Kelley, Marca Personal y Caso Roosevelt con opción de impresión en PDF.</p>
       </div>
-      <div class="card-footer">
-        <span class="card-meta">Preparación Formativa 1</span>
-        <a href="compendio-teorico.html" class="card-btn blue-btn">Ver Compendio ➔</a>
-      </div>
-    </div>
+    </section>
 
-    <!-- RECURSO 3: MINI CASOS CON TIMER -->
-    <div class="hub-card card-casos">
-      <div class="card-top">
-        <div class="card-tags">
-          <span class="tag ea-tag">Experiencia de Aprendizaje 1</span>
-          <span class="tag active-tag">⏱ En Sala (10 min)</span>
-        </div>
-        <h2 class="card-title">Mini Casos de Aplicación Rápida</h2>
-        <p class="card-desc">5 desafíos prácticos proyectables con temporizador interactivo de 10:00 minutos por caso, analizando dilemas de Kelley, framing, ruidos y marca personal.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-meta">11 Diapositivas</span>
-        <a href="mini-casos.html" class="card-btn">Abrir Presentación ➔</a>
-      </div>
-    </div>
+    <!-- Experiencia de Aprendizaje 1 (Cierre y Rescate) -->
+    <section>
+      <div class="section-title">Experiencia de Aprendizaje 1: Cierre y Retroalimentación</div>
+      <div class="grid-links">
+        
+        <!-- Lámina de Rescate EP1 -->
+        <a href="taller_rescate.html" class="card-link">
+          <div class="card-tag">Taller de Mejora Continua</div>
+          <div class="card-name">Ficha de Autorreflexión (+1,0 Punto)</div>
+          <div class="card-desc">Lámina de instrucciones fijas para el rescate individual y manuscrito de la Evaluación Parcial 1. Entrega a las 15:00 hrs.</div>
+        </a>
 
-    <!-- RECURSO 4: GUÍA DE ESTUDIO DE CASOS -->
-    <div class="hub-card card-guia">
-      <div class="card-top">
-        <div class="card-tags">
-          <span class="tag ea-tag">Experiencia de Aprendizaje 1</span>
-          <span class="tag study-tag">📖 Análisis Profundo</span>
-        </div>
-        <h2 class="card-title">Guía de Estudio y Análisis de Casos</h2>
-        <p class="card-desc">Compendio analítico con el desglose teórico completo de los 5 casos, marco de Lewicki, Cialdini y Watzlawick con formato imprimible para la Formativa 1.</p>
+        <!-- Compendio Teórico Base -->
+        <a href="compendio-teorico.html" class="card-link">
+          <div class="card-tag">Material de Consulta Permanente</div>
+          <div class="card-name">Compendio Teórico EA1</div>
+          <div class="card-desc">Glosario y fundamentos normativos: Lewicki (Caps. 1, 2 y 8), Cialdini, Watzlawick y dilemas de Kelley.</div>
+        </a>
+
       </div>
-      <div class="card-footer">
-        <span class="card-meta">Lectura Profunda</span>
-        <a href="guia-estudio.html" class="card-btn teal-btn">Ver Guía de Casos ➔</a>
-      </div>
-    </div>
+    </section>
 
-  </div>
+  </main>
 
-  <div class="hub-footer-callout">
-    💡 <strong>Nota para los Estudiantes:</strong> Este portal es de acceso libre. Pueden guardar este enlace en los marcadores de su teléfono móvil para consultar las actividades de clase y el material de preparación para las evaluaciones.
-  </div>
-
-</div>
+  <!-- Pie de página -->
+  <footer>
+    Escuela de Administración y Negocios • Duoc UC • Plataforma de apoyo docente
+  </footer>
 
 </body>
 </html>
