@@ -72,7 +72,7 @@
     main {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.2rem;
       flex: 1;
     }
 
@@ -95,6 +95,10 @@
       border-radius: 2px;
     }
 
+    .section-title.muted::before {
+      background-color: var(--accent-blue);
+    }
+
     .grid-links {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -110,7 +114,7 @@
       color: inherit;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.55rem;
       transition: all 0.2s ease-in-out;
       position: relative;
     }
@@ -154,9 +158,56 @@
       line-height: 1.4;
     }
 
+    /* Estilo para lista de archivos y documentos históricos */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .archive-item {
+      background-color: rgba(30, 41, 59, 0.6);
+      border: 1px dashed var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .archive-item:hover {
+      border-color: var(--accent-blue);
+      background-color: var(--card-bg);
+      transform: translateY(-1px);
+    }
+
+    .archive-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .archive-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .archive-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .archive-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
     footer {
       border-top: 1px solid var(--card-border);
-      margin-top: 2rem;
+      margin-top: 3rem;
       padding-top: 1rem;
       text-align: center;
       font-size: 0.85rem;
@@ -167,7 +218,7 @@
       body {
         padding: 1rem;
       }
-      .grid-links {
+      .grid-links, .archive-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -179,7 +230,7 @@
   <header>
     <div class="header-title">
       <h1>NEGOCIACIÓN <span>VNA1103</span></h1>
-      <p>Repositorio de Recursos y Actividades de Aprendizaje • Duoc UC</p>
+      <p>Repositorio Central de Recursos y Actividades • Duoc UC</p>
     </div>
     <div class="badge-docente">
       Profesor Fabián Urbina Peña
@@ -188,45 +239,85 @@
 
   <main>
 
-    <!-- Experiencia de Aprendizaje 2 -->
+    <!-- ZONA ACTIVA: Experiencia de Aprendizaje 2 -->
     <section>
-      <div class="section-title">Experiencia de Aprendizaje 2: Estilos y Modelos de Negociación</div>
+      <div class="section-title">En Curso: EA2 - Estilos y Modelos de Negociación</div>
       <div class="grid-links">
         
         <!-- Taller en Papelógrafo EA2 -->
         <a href="taller_ea2_ring.html" class="card-link highlight">
-          <div class="card-tag tag-yellow">Actividad en Sala • Papelógrafos</div>
+          <div class="card-tag tag-yellow">Taller en Sala • Papelógrafos</div>
           <div class="card-name">El Ring de los Paradigmas</div>
-          <div class="card-desc">Taller práctico presencial: análisis comparativo entre negociación distributiva e integradora (Harvard), caso del auto usado y aplicación de Cialdini.</div>
+          <div class="card-desc">Contraste visual: Negociación Distributiva vs. Integradora (Harvard), caso del auto usado y persuasión de Cialdini.</div>
         </a>
 
-        <!-- Material de Simulación Futuro -->
-        <div class="card-link" style="opacity: 0.75; cursor: default;">
-          <div class="card-tag tag-green">Próxima Sesión • Role Playing</div>
-          <div class="card-name">Caso Bancorp</div>
-          <div class="card-desc">Simulación comercial en duplas: negociación de espacios publicitarios, estacionalidad y márgenes de descuento.</div>
+        <!-- Caso Bancorp (Role-Playing) -->
+        <div class="card-link" style="opacity: 0.85;">
+          <div class="card-tag tag-green">Simulación Práctica • Duplas</div>
+          <div class="card-name">Caso Bancorp (Vallas Publicitarias)</div>
+          <div class="card-desc">Preparación para el role-playing: compra y venta de espacios publicitarios, estacionalidad y límites financieros.</div>
         </div>
 
       </div>
     </section>
 
-    <!-- Experiencia de Aprendizaje 1 (Cierre y Rescate) -->
+    <!-- ZONA DE CIERRE: Experiencia de Aprendizaje 1 -->
     <section>
-      <div class="section-title">Experiencia de Aprendizaje 1: Cierre y Retroalimentación</div>
+      <div class="section-title muted">Evaluación Parcial 1: Cierre y Rescate</div>
       <div class="grid-links">
         
         <!-- Lámina de Rescate EP1 -->
         <a href="taller_rescate.html" class="card-link">
           <div class="card-tag">Taller de Mejora Continua</div>
           <div class="card-name">Ficha de Autorreflexión (+1,0 Punto)</div>
-          <div class="card-desc">Lámina de instrucciones fijas para el rescate individual y manuscrito de la Evaluación Parcial 1. Entrega a las 15:00 hrs.</div>
+          <div class="card-desc">Instrucciones proyectables para la revisión activa y manuscrita de la Evaluación Parcial 1. Entrega a las 15:00 hrs.</div>
         </a>
 
-        <!-- Compendio Teórico Base -->
+        <!-- Compendio Teórico Base EA1 -->
         <a href="compendio-teorico.html" class="card-link">
-          <div class="card-tag">Material de Consulta Permanente</div>
-          <div class="card-name">Compendio Teórico EA1</div>
-          <div class="card-desc">Glosario y fundamentos normativos: Lewicki (Caps. 1, 2 y 8), Cialdini, Watzlawick y dilemas de Kelley.</div>
+          <div class="card-tag">Base Normativa EA1</div>
+          <div class="card-name">Compendio Teórico Institucional</div>
+          <div class="card-desc">Definiciones teóricas de la asignatura: Lewicki (Caps. 1, 2 y 8), axiomas de Watzlawick, Kelley y Cialdini.</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ZONA HISTÓRICA / REPOSITORIO PERMANENTE -->
+    <section>
+      <div class="section-title muted" style="font-size: 1.05rem;">Archivo y Materiales de Consulta Permanente</div>
+      <div class="archive-grid">
+
+        <a href="EA1.pdf" class="archive-item" target="_blank">
+          <div class="archive-icon">📄</div>
+          <div class="archive-info">
+            <span class="archive-title">EA1.pdf (Marco Teórico)</span>
+            <span class="archive-sub">Lectura y definiciones oficiales</span>
+          </div>
+        </a>
+
+        <a href="pauta_ea1.html" class="archive-item">
+          <div class="archive-icon">📋</div>
+          <div class="archive-info">
+            <span class="archive-title">Pauta de Corrección EA1</span>
+            <span class="archive-sub">Criterios de evaluación Formas A, B y C</span>
+          </div>
+        </a>
+
+        <a href="casos_ea1.html" class="archive-item">
+          <div class="archive-icon">📂</div>
+          <div class="archive-info">
+            <span class="archive-title">Casos Analíticos EA1</span>
+            <span class="archive-sub">Enunciados y detonantes prácticos</span>
+          </div>
+        </a>
+
+        <a href="rubrica_v13.html" class="archive-item">
+          <div class="archive-icon">📊</div>
+          <div class="archive-info">
+            <span class="archive-title">Rúbrica Oficial (100 Pts)</span>
+            <span class="archive-sub">Escala analítica de 6 preguntas Duoc UC</span>
+          </div>
         </a>
 
       </div>
