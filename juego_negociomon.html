@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NEGOCIOMON - Game Boy Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gb-darkest: #0f380f;
+      --gb-dark: #306230;
+      --gb-light: #8bac0f;
+      --gb-lightest: #9bbc0f;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      font-family: 'Press Start 2P', monospace;
+    }
+
+    body {
+      background-color: #202020;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+
+    /* Marco de Game Boy */
+    .gb-console {
+      background-color: #c4bebb;
+      padding: 20px 15px 30px 15px;
+      border-radius: 12px 12px 50px 12px;
+      box-shadow: 0 10px 0 #8b8685, 0 15px 25px rgba(0,0,0,0.5);
+      max-width: 360px;
+      width: 100%;
+    }
+
+    .screen-border {
+      background-color: #777480;
+      padding: 18px 12px 14px 12px;
+      border-radius: 8px 8px 30px 8px;
+    }
+
+    .screen-header {
+      color: #9c1831;
+      font-size: 6px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .battery-led {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: #ff3b30;
+      border-radius: 50%;
+      box-shadow: 0 0 4px #ff3b30;
+      margin-right: 4px;
+    }
+
+    .screen {
+      background-color: var(--gb-lightest);
+      border: 3px solid var(--gb-darkest);
+      width: 100%;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      color: var(--gb-darkest);
+    }
+
+    /* Pantalla de Creación */
+    #screen-char-create {
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+    .gb-input {
+      background-color: var(--gb-light);
+      border: 2px solid var(--gb-darkest);
+      padding: 8px;
+      font-family: inherit;
+      font-size: 9px;
+      color: var(--gb-darkest);
+      text-transform: uppercase;
+      outline: none;
+      text-align: center;
+    }
+
+    .avatar-select {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 8px;
+    }
+
+    .avatar-card {
+      border: 2px dashed var(--gb-darkest);
+      padding: 10px 8px;
+      cursor: pointer;
+      font-size: 7px;
+    }
+
+    .avatar-card.selected {
+      background-color: var(--gb-light);
+      border: 2px solid var(--gb-darkest);
+    }
+
+    /* Pantalla de Combate */
+    #screen-battle {
+      display: none;
+      height: 100%;
+      flex-direction: column;
+    }
+
+    .battle-arena {
+      flex: 1;
+      position: relative;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Cajas de estado */
+    .status-box {
+      border: 2px solid var(--gb-darkest);
+      background-color: var(--gb-light);
+      padding: 6px;
+      font-size: 7px;
+      line-height: 1.4;
+      width: 170px;
+    }
+
+    .status-box.enemy {
+      align-self: flex-start;
+      margin-left: 4px;
+    }
+
+    .status-box.player {
+      align-self: flex-end;
+      margin-right: 4px;
+    }
+
+    .bar-container {
+      background-color: var(--gb-lightest);
+      border: 1px solid var(--gb-darkest);
+      height: 7px;
+      margin-top: 3px;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background-color: var(--gb-darkest);
+      width: 100%;
+      transition: width 0.3s steps(8);
+    }
+
+    /* Sprite Sprites 8-bit simples con CSS */
+    .sprite {
+      font-size: 26px;
+      line-height: 1;
+      position: absolute;
+    }
+
+    .enemy-sprite {
+      top: 15px;
+      right: 25px;
+    }
+
+    .player-sprite {
+      bottom: 12px;
+      left: 20px;
+    }
+
+    /* Cuadro de Diálogos */
+    .dialogue-box {
+      height: 70px;
+      border-top: 3px solid var(--gb-darkest);
+      background-color: var(--gb-lightest);
+      padding: 8px;
+      font-size: 7.5px;
+      line-height: 1.5;
+    }
+
+    /* Menú de Acciones */
+    .actions-menu {
+      height: 80px;
+      border-top: 2px dashed var(--gb-darkest);
+      background-color: var(--gb-light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 6px;
+    }
+
+    .gb-btn {
+      background-color: var(--gb-lightest);
+      border: 2px solid var(--gb-darkest);
+      color: var(--gb-darkest);
+      font-size: 6.5px;
+      padding: 6px 4px;
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.3;
+    }
+
+    .gb-btn:active {
+      background-color: var(--gb-dark);
+      color: var(--gb-lightest);
+    }
+
+    /* Botones físicos inferiores */
+    .controller-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding: 0 10px;
+    }
+
+    .d-pad {
+      width: 65px;
+      height: 65px;
+      position: relative;
+    }
+
+    .d-center {
+      width: 21px;
+      height: 21px;
+      background: #1a1a1a;
+      position: absolute;
+      top: 22px;
+      left: 22px;
+    }
+
+    .d-axis-v {
+      width: 21px;
+      height: 65px;
+      background: #1a1a1a;
+      position: absolute;
+      left: 22px;
+      border-radius: 4px;
+    }
+
+    .d-axis-h {
+      width: 65px;
+      height: 21px;
+      background: #1a1a1a;
+      position: absolute;
+      top: 22px;
+      border-radius: 4px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      transform: rotate(-25deg);
+    }
+
+    .btn-circle {
+      width: 32px;
+      height: 32px;
+      background-color: #9c1831;
+      border-radius: 50%;
+      border: 2px solid #5a0c1a;
+      box-shadow: 0 3px 0 #5a0c1a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="gb-console">
+  <div class="screen-border">
+    <div class="screen-header">
+      <span><span class="battery-led"></span>BATERIA</span>
+      <span>PANTALLA DE MATRIZ DE PUNTOS</span>
+    </div>
+
+    <div class="screen">
+      <!-- PANTALLA 1: CREACIÓN DE PERSONAJE -->
+      <div id="screen-char-create">
+        <p style="margin-top:4px;">¡BIENVENIDO A<br>NEGOCIOMON!</p>
+        <p style="font-size:7px; color:var(--gb-dark);">INGRESA TU NOMBRE:</p>
+        <input type="text" id="player-name-input" class="gb-input" maxlength="8" placeholder="NOMBRE">
+        
+        <p style="font-size:7px; margin-top:4px;">ELIGE TU ROL:</p>
+        <div class="avatar-select">
+          <div class="avatar-card selected" onclick="selectGender('M')">
+            <div style="font-size:18px;">👨‍💼</div>
+            <span>VENDEDOR</span>
+          </div>
+          <div class="avatar-card" onclick="selectGender('F')">
+            <div style="font-size:18px;">👩‍💼</div>
+            <span>VENDEDORA</span>
+          </div>
+        </div>
+
+        <button class="gb-btn" style="text-align:center; padding:10px; margin-top:8px;" onclick="startGame()">
+          ▶ INICIAR CARRERA
+        </button>
+      </div>
+
+      <!-- PANTALLA 2: ARENA DE COMBATE -->
+      <div id="screen-battle">
+        <div class="battle-arena">
+          <!-- Enemigo: Comprador Apurado -->
+          <div class="status-box enemy">
+            <div style="display:flex; justify-content:space-between;">
+              <span id="enemy-name">COMPRADOR APURADO</span>
+              <span>Nv:1</span>
+            </div>
+            <div>PACIENCIA:</div>
+            <div class="bar-container">
+              <div id="enemy-hp-bar" class="bar-fill"></div>
+            </div>
+          </div>
+          <div class="sprite enemy-sprite">🧐</div>
+
+          <!-- Jugador -->
+          <div class="sprite player-sprite" id="player-sprite-icon">👨‍💼</div>
+          <div class="status-box player">
+            <div style="display:flex; justify-content:space-between;">
+              <span id="player-hud-name">ESTRATEGA</span>
+              <span id="player-level-hud">Nv:1</span>
+            </div>
+            <div>MARGEN COMERCIAL:</div>
+            <div class="bar-container">
+              <div id="player-hp-bar" class="bar-fill"></div>
+            </div>
+            <div id="player-hp-text" style="font-size:6px; text-align:right; margin-top:2px;">100/100</div>
+          </div>
+        </div>
+
+        <!-- Caja de texto -->
+        <div class="dialogue-box" id="dialogue-text">
+          ¡Un COMPRADOR APURADO exige una reunión de emergencia!
+        </div>
+
+        <!-- Menú de Acciones de Negociación -->
+        <div class="actions-menu" id="actions-menu">
+          <button class="gb-btn" onclick="executeMove('indagar')">▶ 1.INDAGAR INTERESES</button>
+          <button class="gb-btn" onclick="executeMove('anclar')">▶ 2.ANCLAR PRECIO</button>
+          <button class="gb-btn" onclick="executeMove('compensar')">▶ 3.COMPENSAR (LOGROLL)</button>
+          <button class="gb-btn" onclick="executeMove('mapan')">▶ 4.EVALUAR MAPAN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decoración física inferior -->
+  <div class="controller-area">
+    <div class="d-pad">
+      <div class="d-axis-v"></div>
+      <div class="d-axis-h"></div>
+      <div class="d-center"></div>
+    </div>
+    <div class="action-buttons">
+      <div class="btn-circle"></div>
+      <div class="btn-circle"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let player = {
+    name: "ALUMNO",
+    gender: "M",
+    level: 1,
+    exp: 0,
+    maxMargin: 100,
+    currentMargin: 100
+  };
+
+  let enemy = {
+    name: "CLIENTE APURADO",
+    maxPatience: 100,
+    currentPatience: 100,
+    discoveredInterests: false
+  };
+
+  let isTurnActive = true;
+
+  // Cargar datos previos
+  window.onload = function() {
+    const saved = localStorage.getItem('negociomon_save');
+    if (saved) {
+      player = JSON.parse(saved);
+      document.getElementById('player-name-input').value = player.name;
+    }
+  };
+
+  function selectGender(g) {
+    player.gender = g;
+    document.querySelectorAll('.avatar-card').forEach((el, idx) => {
+      el.classList.toggle('selected', (idx === 0 && g === 'M') || (idx === 1 && g === 'F'));
+    });
+  }
+
+  function startGame() {
+    const nameInput = document.getElementById('player-name-input').value.trim();
+    if (nameInput) player.name = nameInput.toUpperCase();
+    
+    document.getElementById('player-sprite-icon').innerText = (player.gender === 'M') ? '👨‍💼' : '👩‍💼';
+    document.getElementById('player-hud-name').innerText = player.name;
+    document.getElementById('player-level-hud').innerText = "Nv:" + player.level;
+    
+    document.getElementById('screen-char-create').style.display = 'none';
+    document.getElementById('screen-battle').style.display = 'flex';
+
+    localStorage.setItem('negociomon_save', JSON.stringify(player));
+    setDialogue(`¡${enemy.name} dice: "Tengo 5 minutos, bájame un 15% el precio o me voy"!`);
+  }
+
+  function setDialogue(text) {
+    document.getElementById('dialogue-text').innerText = text;
+  }
+
+  function updateBars() {
+    const enemyPercent = Math.max(0, (enemy.currentPatience / enemy.maxPatience) * 100);
+    const playerPercent = Math.max(0, (player.currentMargin / player.maxMargin) * 100);
+    
+    document.getElementById('enemy-hp-bar').style.width = enemyPercent + '%';
+    document.getElementById('player-hp-bar').style.width = playerPercent + '%';
+    document.getElementById('player-hp-text').innerText = `${player.currentMargin}/${player.maxMargin}`;
+  }
+
+  function disableMenu(disabled) {
+    const btns = document.querySelectorAll('.actions-menu .gb-btn');
+    btns.forEach(b => b.disabled = disabled);
+  }
+
+  function executeMove(moveKey) {
+    if (!isTurnActive) return;
+    disableMenu(true);
+
+    if (moveKey === 'indagar') {
+      enemy.discoveredInterests = true;
+      setDialogue(`${player.name} aplica escucha activa e indaga el dolor del cliente...`);
+      setTimeout(() => {
+        enemy.currentPatience -= 20;
+        updateBars();
+        setDialogue(`¡Descubres que al cliente le urge el plazo de entrega, no el dinero!`);
+        setTimeout(enemyTurn, 2200);
+      }, 1500);
+
+    } else if (moveKey === 'anclar') {
+      setDialogue(`${player.name} lanza un contra-anclaje agresivo en el precio.`);
+      setTimeout(() => {
+        if (!enemy.discoveredInterests) {
+          player.currentMargin -= 20;
+          updateBars();
+          setDialogue(`¡El cliente se siente agredido! Tensión en aumento. Fuga de margen: -20.`);
+        } else {
+          enemy.currentPatience -= 25;
+          updateBars();
+          setDialogue(`¡Anclaje técnico justificado! La defensa del cliente cede.`);
+        }
+        setTimeout(enemyTurn, 2200);
+      }, 1500);
+
+    } else if (moveKey === 'compensar') {
+      if (!enemy.discoveredInterests) {
+        setDialogue(`Intentas empaquetar, pero no sabes qué le importa al cliente.`);
+        setTimeout(() => {
+          player.currentMargin -= 10;
+          updateBars();
+          setDialogue(`Concesión huérfana no vinculada: pierdes 10 de margen.`);
+          setTimeout(enemyTurn, 2200);
+        }, 1500);
+      } else {
+        setDialogue(`¡LOGROLLING! Ofreces entrega en 48 hrs a cambio de contrato anual.`);
+        setTimeout(() => {
+          enemy.currentPatience -= 50;
+          updateBars();
+          setDialogue(`¡CRÍTICO! Acuerdo en la frontera de Pareto. Paciencia alineada.`);
+          setTimeout(checkBattleOutcome, 2000);
+        }, 1500);
+      }
+
+    } else if (moveKey === 'mapan') {
+      setDialogue(`${player.name} revisa su MAPAN alternativo...`);
+      setTimeout(() => {
+        player.currentMargin = Math.min(player.maxMargin, player.currentMargin + 25);
+        updateBars();
+        setDialogue(`¡Tu poder aumenta al recordar que tienes otras opciones fuera de la mesa!`);
+        setTimeout(enemyTurn, 2200);
+      }, 1500);
+    }
+  }
+
+  function enemyTurn() {
+    if (checkBattleOutcome()) return;
+
+    setDialogue(`El CLIENTE presiona: "Mi directorio no aceptará estos plazos..."`);
+    setTimeout(() => {
+      player.currentMargin -= 15;
+      updateBars();
+      setDialogue(`Presión táctica del cliente: Pierdes 15 de margen.`);
+      setTimeout(() => {
+        if (!checkBattleOutcome()) {
+          setDialogue(`¿Qué maniobra aplicará ${player.name}?`);
+          disableMenu(false);
+        }
+      }, 1800);
+    }, 1800);
+  }
+
+  function checkBattleOutcome() {
+    if (enemy.currentPatience <= 0) {
+      setDialogue(`¡VICTORIA! Cerraste el contrato defendiendo el margen.`);
+      disableMenu(true);
+      player.level += 1;
+      player.exp += 100;
+      localStorage.setItem('negociomon_save', JSON.stringify(player));
+      setTimeout(() => {
+        alert(`¡Acuerdo cerrado!\nSubiste a Nivel ${player.level}.\nProgreso guardado en tu móvil.`);
+        location.reload();
+      }, 1500);
+      return true;
+    }
+
+    if (player.currentMargin <= 0) {
+      setDialogue(`¡DERROTA! Cediste todo tu margen sin compensación.`);
+      disableMenu(true);
+      setTimeout(() => {
+        alert(`Fuga de margen total.\nRevisa el capítulo de Concesiones y vuelve a intentarlo.`);
+        location.reload();
+      }, 1500);
+      return true;
+    }
+    return false;
+  }
+</script>
+
+</body>
+</html>
