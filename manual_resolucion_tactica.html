@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNA1103 - Guía de Estudio: Resolución y Análisis Táctico de Negociación</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--accent-blue);
+      color: var(--accent-blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    h1 span {
+      color: var(--accent-yellow);
+    }
+
+    .intro-text {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.8rem;
+    }
+
+    .section-num {
+      background: var(--accent-yellow);
+      color: #0f172a;
+      font-weight: 900;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: #fff;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent-blue);
+      margin: 1.2rem 0 0.5rem 0;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .theory-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-left: 4px solid var(--accent-yellow);
+      padding: 1rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.2rem;
+      font-size: 0.92rem;
+    }
+
+    .example-box {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px dashed var(--accent-blue);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1.2rem 0;
+    }
+
+    .example-title {
+      color: var(--accent-blue);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dialogue-bubble {
+      margin: 0.8rem 0;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .dialogue-opponent {
+      background: rgba(239, 68, 68, 0.15);
+      border-left: 4px solid var(--accent-red);
+      color: #fca5a5;
+    }
+
+    .dialogue-error {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 4px solid #f87171;
+      color: #cbd5e1;
+      margin-left: 1.5rem;
+    }
+
+    .dialogue-master {
+      background: rgba(16, 185, 129, 0.15);
+      border-left: 4px solid var(--accent-green);
+      color: #a7f3d0;
+      margin-left: 1.5rem;
+    }
+
+    .step-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 1rem 0;
+    }
+
+    .step-list li {
+      position: relative;
+      padding-left: 1.8rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    .step-list li::before {
+      content: "➔";
+      position: absolute;
+      left: 0;
+      color: var(--accent-yellow);
+      font-weight: bold;
+    }
+
+    .summary-card {
+      background: linear-gradient(180deg, #1e293b 0%, #172554 100%);
+      border: 1px solid var(--accent-blue);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .summary-card h3 {
+      color: var(--accent-yellow);
+      margin-top: 0;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover {
+      color: var(--accent-yellow);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="nav-back">← Volver al Portal de Negociación VNA1103</a>
+
+    <header>
+      <span class="badge-top">Manual de Estudio y Fundamentación • EA3</span>
+      <h1>MANUAL DE MANIOBRAS <span>TÁCTICAS EN LA MESA</span></h1>
+      <p class="intro-text">
+        Desglose metodológico, justificación psicológica y protocolos de respuesta frente a presiones distributivas. Material de apoyo técnico para la Ficha de Planificación y la Evaluación Parcial 3.
+      </p>
+    </header>
+
+    <!-- INTRODUCCIÓN GENERAL -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">💡</div>
+        <h2>¿Por qué fallan las negociaciones en la práctica?</h2>
+      </div>
+      <p>
+        En el aula y en los libros de texto, las negociaciones suelen planificarse bajo condiciones ideales: ambas partes conversan con calma, exponen sus intereses y buscan de mutuo acuerdo la "Frontera de Pareto". Sin embargo, en el mundo real, los negociadores se enfrentan a <strong>asimetrías de poder, presiones de reloj y maniobras sucias</strong> diseñadas deliberadamente para forzar concesiones prematuras.
+      </p>
+      <div class="theory-box">
+        <strong>Principio Rector de la EA3:</strong><br>
+        <em>«Quien no controla la estructura del proceso, se convierte en víctima del contenido de la contraparte»</em>. No basta con conocer el propio MAPAN o Punto de Reserva; es indispensable dominar los protocolos conversacionales exactos para neutralizar las tácticas del adversario sin quebrar la relación comercial.
+      </div>
+    </div>
+
+    <!-- FICHA 1 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Desarme de Anclajes Agresivos (El Bloqueo de Piso)</h2>
+      </div>
+      
+      <h3>La Lógica Psicológica de la Táctica</h3>
+      <p>
+        El sesgo de anclaje descubierto por Kahneman y Tversky demuestra que el primer número puesto sobre la mesa ejerce una fuerza gravitacional desproporcionada sobre la mente de la contraparte. Cuando un comprador lanza una oferta ridículamente baja respaldada por una supuesta "competencia", su objetivo no es que aceptes esa cifra, sino <strong>recalibrar tu expectativa de cobro</strong> y hacer que tu punto de reserva se mueva a la baja por temor a quedarte sin el negocio.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Nuevo Caso de Estudio: Servicios de Mantención de Servidores Cloud</div>
+        <p>
+          Un proveedor de soporte IT ofrece una póliza anual a <strong>$4.500.000</strong>. Su piso mínimo de costos es <strong>$3.600.000</strong>. Al iniciar la conversación, el cliente contratista dice:
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Ataque del Cliente:</strong><br>
+          «Una empresa de la competencia me cotizó exactamente el mismo soporte 24/7 por $2.500.000 anuales. O me igualas ese precio ahora o cierro la adjudicación con ellos».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Fuga de Margen por Pánico):</strong><br>
+          «No puedo llegar a $2.500.000, pero te lo puedo dejar en $3.200.000 para que trabajemos juntos».<br>
+          <em>¿Por qué falla?</em> Validaste el piso falso del competidor y perforaste tu propio punto de reserva ($3.600.000), operando a pérdida.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Estratégica (Desanclaje Técnico):</strong><br>
+          «Un valor de $2.500.000 no cubre las certificaciones internacionales ni el tiempo de respuesta garantizado bajo contrato (SLA menor a 15 minutos). A esa tarifa, el servicio opera con soporte de segundo nivel no dedicado. Separemos esa cifra de la mesa; revisemos si ajustando los tiempos de respuesta o la frecuencia de auditorías podemos construir un plan que se ajuste a su presupuesto sin poner en riesgo la disponibilidad de sus sistemas».
+        </div>
+      </div>
+
+      <h3>Pasos Metodológicos para Resolver este Escenario</h3>
+      <ul class="step-list">
+        <li><strong>No contraofertes de inmediato:</strong> Lanzar una cifra en respuesta a un anclaje extremo convalida que el número del otro es un punto de referencia válido.</li>
+        <li><strong>Ataca la premisa, no a la persona:</strong> Desacredita el estándar técnico o las condiciones de esa supuesta oferta competidora (garantía, calidad, materiales, tiempo de respuesta).</li>
+        <li><strong>Expulsa el número de la mesa:</strong> Usa frases explícitas como <em>«separemos esa cifra»</em> o <em>«esa referencia no es comparable»</em> y redirige la discusión hacia las especificaciones.</li>
+      </ul>
+    </div>
+
+    <!-- FICHA 2 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>Blindaje Frente a la Emboscada de Agenda y Deadline</h2>
+      </div>
+
+      <h3>La Lógica Psicológica de la Táctica</h3>
+      <p>
+        La asimetría de tiempo es una de las herramientas de dominación más agresivas. Cuando la contraparte recorta artificialmente la reunión (por ejemplo, de 45 a 10 minutos) y exige tratar el precio primero, está ejecutando dos maniobras simultáneas: <strong>desestabilizar tu preparación mediante el estrés</strong> y <strong>anular tu capacidad de empaquetar variables</strong> (logrolling). Si defines el precio en los primeros minutos, te quedarás sin cartas para negociar plazos, pagos o garantías al final.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Nuevo Caso de Estudio: Concesión de Casino Corporativo para 500 Trabajadores</div>
+        <p>
+          Una empresa de catering corporativo asiste a reunión con el Gerente de RR.HH. La cita era de una hora para revisar minutas nutricionales, turnos y costos.
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Ataque del Cliente:</strong><br>
+          «Tengo que subir de urgencia a una reunión con el sindicato en 8 minutos. Saltémonos el menú y el protocolo de servicio: dime cuál es tu valor por plato con descuento corporativo y vemos si avanzamos».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Aceptación Pasiva de la Agenda):</strong><br>
+          «Bueno, el precio de lista es $6.500 por colación, pero por la premura se lo puedo dejar en $5.200».<br>
+          <em>¿Por qué falla?</em> Regalaste el precio sin saber si exigirán postres libres, platos vegetarianos o turnos nocturnos, los cuales terminarán devorando tu margen.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Estratégica (Protección de la Secuencia Operativa):</strong><br>
+          «Entiendo completamente la urgencia con el sindicato. Precisamente para cuidar su tiempo y no entregarle un número ciego que luego no podamos cumplir, el valor por plato está estrictamente atado a la estructura de turnos y las opciones de menú que elijan. En estos 8 minutos definamos únicamente esos dos alcances operativos; con esa base clara, mañana a primera hora le envío la cotización final cerrada para su revisión».
+        </div>
+      </div>
+
+      <h3>Pasos Metodológicos para Resolver este Escenario</h3>
+      <ul class="step-list">
+        <li><strong>Valida la emoción o urgencia ajena:</strong> Reconoce el tiempo escaso para no sonar confrontacional.</li>
+        <li><strong>Establece el nexo indivisible (Precio = Alcance):</strong> Explica que un precio sin especificaciones no es un valor real, sino un riesgo operacional.</li>
+        <li><strong>Protege tu propia fecha límite:</strong> Si te presionan con un "ahora o nunca", utiliza tu MAPAN y propón posponer el cierre antes de aceptar condiciones a ciegas.</li>
+      </ul>
+    </div>
+
+    <!-- FICHA 3 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Neutralización de la Concesión Trampa (El Farol)</h2>
+      </div>
+
+      <h3>La Lógica Psicológica de la Táctica</h3>
+      <p>
+        El principio de reciprocidad de Cialdini señala que los seres humanos sentimos una obligación natural de devolver favores. Los negociadores distributivos explotan esto creando <strong>concesiones ficticias</strong>: ceden en un punto que no tiene costo real para ellos (o que ya tenían contemplado entregar) y luego exigen teatralmente que tú les compenses con un sacrificio económico tangible y doloroso.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Nuevo Caso de Estudio: Fabricación de Packaging y Cajas para E-commerce</div>
+        <p>
+          Un fabricante de cartón negocia con una tienda de retail online. El comprador utiliza una cláusula de diseño genérico para presionar por un descuento financiero.
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Ataque del Cliente:</strong><br>
+          «Para demostrar que somos un cliente flexible, aceptamos eliminar el relieve dorado en la tapa de las cajas. Ya que tuvimos la gentileza de ahorrarles ese proceso, lo mínimo es que nos descuenten un 10% del total de la orden».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Ceder por Culpa o Compromiso Social):</strong><br>
+          «Muchas gracias por su comprensión con el relieve. Les descontaremos ese 10% en señal de buena voluntad».<br>
+          <em>¿Por qué falla?</em> El relieve dorado representaba apenas un 1% del costo de matriz, pero tú acabas de entregar un 10% del flujo total de la operación.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Estratégica (Auditoría de Valor y Compensación Asimétrica):</strong><br>
+          «Agradecemos la flexibilidad con la terminación de la tapa; sin embargo, en nuestra matriz productiva ese acabado representa solo un impacto marginal en los costos, mientras que un 10% de descuento directo compromete la viabilidad del cartón corrugado que utilizamos. Si el objetivo prioritario de ustedes es optimizar costos en ese 10%, podemos alcanzarlo SI Y SÓLO SI aumentan el tamaño del lote de 10.000 a 25.000 unidades y consolidan despachos mensuales en vez de semanales».
+        </div>
+      </div>
+
+      <h3>Pasos Metodológicos para Resolver este Escenario</h3>
+      <ul class="step-list">
+        <li><strong>Audita el valor real de lo concedido:</strong> Separa el impacto psicológico del costo económico real de la variable.</li>
+        <li><strong>Aplica la regla de oro: Cero Concesiones Puras:</strong> Jamás entregues una ventaja sin amarrarla de inmediato a una condición beneficiosa para tu estructura.</li>
+        <li><strong>Fórmula lingüística obligatoria:</strong> <em>«Podemos evaluar X, SI Y SÓLO SI tú me compensas en Y»</em>.</li>
+      </ul>
+    </div>
+
+    <!-- FICHA 4 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Resistencia al Vacío Táctico y la Intimidación Pasiva</h2>
+      </div>
+
+      <h3>La Lógica Psicológica de la Táctica</h3>
+      <p>
+        El silencio deliberado genera una incomodidad psicológica casi insoportable en negociadores poco entrenados. Ante una mirada fría o un mutismo prolongado, el cerebro humano interpreta automáticamente que la otra parte está ofendida, decepcionada o a punto de quebrar el trato. La reacción ansiosa típica es <strong>seguir hablando para llenar el vacío</strong>, y en ese proceso, el vendedor suele comenzar a auto-descontarse o regalar beneficios sin que se los hayan pedido.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Nuevo Caso de Estudio: Venta de Maquinaria Agrícola para Cosecha de Fruta</div>
+        <p>
+          Un ejecutivo presenta la propuesta de compra de dos tractores especializados por <strong>$78.000.000</strong>. Tras anunciar el monto final, ocurre lo siguiente:
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Maniobra de la Contraparte (Silencio Estratégico):</strong><br>
+          (El dueño del fundo apoya los codos en la mesa, suspira profundamente, se cruza de brazos y se queda mirando al ejecutivo a los ojos en silencio total durante 30 segundos, sin mover un solo músculo).
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Auto-Concesión por Ansiedad):</strong><br>
+          «...bueno, como veo que el monto les complica un poco, podríamos incluirles la primera mantención sin costo o rebajar un 5% si les parece...»<br>
+          <em>¿Por qué falla?</em> Destruiste margen antes de que la contraparte formulara una sola objeción real. Negociaste contra ti mismo.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Estratégica (Sostener y Etiquetar con Empatía Táctica):</strong><br>
+          (Mantener la postura erguida, contacto visual sereno, respirar y tolerar el silencio durante 8-10 segundos. Luego, romperlo con suavidad indagando el interés subyacente):<br>
+          «Percibo que la cifra genera cierta distancia respecto a los retornos proyectados para la temporada. ¿Qué parte del flujo de financiamiento o de la capacidad operativa de los equipos les genera mayor inquietud?».
+        </div>
+      </div>
+
+      <h3>Pasos Metodológicos para Resolver este Escenario</h3>
+      <ul class="step-list">
+        <li><strong>Entrena tu umbral de incomodidad:</strong> Recuerda la máxima: <em>«Quien habla primero después del precio, pierde»</em>. Deja que el silencio trabaje para ti.</li>
+        <li><strong>Mantén el lenguaje no verbal abierto:</strong> No desvíes la mirada, no te muevas en la silla ni muestres nerviosismo táctico.</li>
+        <li><strong>Aplica Etiquetado (Voss):</strong> Usa frases reflexivas para obligar a la contraparte a verbalizar su objeción técnica en vez de manipular con el clima emocional.</li>
+      </ul>
+    </div>
+
+    <!-- SÍNTESIS FINAL -->
+    <div class="summary-card">
+      <h3>Resumen Operativo para la Ficha EP3</h3>
+      <p style="color: #cbd5e1;">
+        Al completar la Ficha de Planificación, los evaluadores buscan que demuestres <strong>trazabilidad analítica</strong>:
+      </p>
+      <ul class="step-list">
+        <li><strong>En Control de Agenda:</strong> Detallar los bloques horarios, las reglas pactadas de inicio y el orden de los temas para evitar emboscadas temporales.</li>
+        <li><strong>En Arsenal Táctico:</strong> Justificar técnicamente el uso de anclajes, contra-anclajes y desanclajes cuando la contraparte intente distorsionar la ZOPA.</li>
+        <li><strong>En Ingeniería de Concesiones:</strong> Declarar explícitamente la moneda de cambio (compensación condicionada) para cada variable negociable.</li>
+        <li><strong>En Control Emocional:</strong> Definir protocolos de autocontrol y empatía táctica para absorber presiones sin caer en reciprocidad agresiva.</li>
+      </ul>
+    </div>
+
+    <footer>
+      Escuela de Administración y Negocios • Duoc UC • Plataforma Docente VNA1103
+    </footer>
+  </div>
+
+</body>
+</html>
