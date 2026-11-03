@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNA1103 - Laboratorio de Arsenal Táctico</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      max-width: 1000px;
+      width: 100%;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      color: #fff;
+    }
+
+    .header h1 span {
+      color: var(--accent-yellow);
+    }
+
+    .badge-sub {
+      background: #1e293b;
+      border: 1px solid var(--accent-blue);
+      color: var(--accent-blue);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 1000px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--accent-blue);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(180deg, #1e293b 0%, #291e0f 100%);
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    }
+
+    .case-card {
+      display: none;
+      max-width: 1000px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .case-card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .case-title {
+      font-size: 1.4rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tactic-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-red { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
+    .tag-blue { background: rgba(56, 189, 248, 0.2); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+    .tag-yellow { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
+
+    .context-box {
+      background: rgba(15, 23, 42, 0.6);
+      border-left: 4px solid var(--accent-blue);
+      padding: 1rem;
+      margin: 1.2rem 0;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .metric-item {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    .metric-val {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .attack-box {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px dashed var(--accent-red);
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .attack-quote {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #fca5a5;
+      line-height: 1.4;
+    }
+
+    .debate-prompt {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid var(--accent-yellow);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+
+    .debate-prompt h4 {
+      color: var(--accent-yellow);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .debate-prompt ul {
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .btn-solution {
+      background: transparent;
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-solution:hover {
+      background: var(--accent-green);
+      color: #000;
+    }
+
+    .solution-box {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 3px solid var(--accent-green);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    footer {
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div>
+      <h1>LABORATORIO <span>ARSENAL TÁCTICO</span></h1>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:3px;">
+        EA3: Entrenamiento de Respuestas Bajo Presión • VNA1103
+      </p>
+    </div>
+    <div class="badge-sub">Simulación Operativa en Sala</div>
+  </header>
+
+  <!-- Pestañas de Navegación -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showCase(1)">Caso 1: Anclaje Agresivo</button>
+    <button class="tab-btn" onclick="showCase(2)">Caso 2: Bloqueo de Tiempo</button>
+    <button class="tab-btn" onclick="showCase(3)">Caso 3: Concesión Trampa</button>
+    <button class="tab-btn" onclick="showCase(4)">Caso 4: Vacío Táctico (Silencio)</button>
+  </div>
+
+  <!-- CASO 1 -->
+  <div id="case-1" class="case-card active">
+    <div class="case-title">
+      <span>1. El Retiro de Piso por Competencia</span>
+      <span class="tactic-tag tag-red">Táctica Distributiva: Anclaje Extremo</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Negocias el abastecimiento de 2.000 repuestos mecánicos industriales para una flota de transporte logístico. Estás en la oficina del Gerente de Adquisiciones.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Tu Costo Unitario</div>
+        <div class="metric-val">$18.500</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Tu Precio Aspiración</div>
+        <div class="metric-val">$24.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Punto de Reserva (Piso)</div>
+        <div class="metric-val">$20.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Anclaje del Cliente</div>
+        <div class="metric-val" style="color:var(--accent-red);">$15.000</div>
+      </div>
+    </div>
+
+    <div class="attack-box">
+      <div class="metric-label" style="color:var(--accent-red);">Disparo Táctico del Cliente:</div>
+      <div class="attack-quote">
+        «Mira, tu competidor directo me acaba de cotizar el lote completo a $15.000 por unidad con entrega inmediata. Si quieres que cerremos el contrato contigo hoy, igualas esa cifra ahora mismo o la orden se va con ellos».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Qué pasa matemáticamente con tu rentabilidad si contraofertas $19.000 de inmediato?</li>
+        <li>¿Por qué responder contra el número del cliente valida su anclaje?</li>
+        <li>¿Cómo se aplica el <strong>Desanclaje Técnico</strong> sin sonar agresivo ni quebrar la mesa?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(1)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-1" class="solution-box">
+        <strong style="color:var(--accent-green);">Protocolo de Desanclaje:</strong><br>
+        Rechazar la validez del número sin agredir: <em>«Un valor de $15.000 está por debajo de los estándares de templado y certificación que exige su flota; a ese precio el competidor está entregando piezas genéricas sin garantía en faena. Separemos esa cifra de la mesa: evaluemos qué volumen o condiciones de despacho permiten acercarnos a su presupuesto sin arriesgar la continuidad operativa de sus camiones».</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASO 2 -->
+  <div id="case-2" class="case-card">
+    <div class="case-title">
+      <span>2. La Emboscada de Agenda y Deadline</span>
+      <span class="tactic-tag tag-yellow">Meta-Negociación: Presión de Tiempo Asimétrica</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Llegaste a una reunión agendada para 45 minutos para negociar la implementación de un software de inventario. La contraparte busca forzarte a negociar precio bajo estrés.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Tiempo Agendado</div>
+        <div class="metric-val">45 Minutos</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Tiempo Recortado</div>
+        <div class="metric-val" style="color:var(--accent-red);">10 Minutos</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Variables Clave</div>
+        <div class="metric-val">Precio, Soporte, Plazo</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Riesgo Táctico</div>
+        <div class="metric-val">Regalar Margen al Final</div>
+      </div>
+    </div>
+
+    <div class="attack-box">
+      <div class="metric-label" style="color:var(--accent-red);">Disparo Táctico del Cliente:</div>
+      <div class="attack-quote">
+        «Me acaban de citar a directorio urgente, así que tenemos solo 10 minutos exactos. No perdamos tiempo viendo presentaciones técnicas ni plazos de soporte: vayamos directo al precio final y el porcentaje de descuento que me vas a aplicar».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Qué trampa estructural ocurre si defines el precio antes de amarrar el soporte y las horas de capacitación?</li>
+        <li>¿Cómo utilizas el principio de Meta-Negociación para blindar la secuencia de discusión?</li>
+        <li>¿Cuál es el riesgo de aceptar negociar en 10 minutos?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(2)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-2" class="solution-box">
+        <strong style="color:var(--accent-green);">Protocolo de Protección de Agenda:</strong><br>
+        Vincular el precio al alcance: <em>«Comprendo perfectamente su urgencia con el directorio. Precisamente para no hacerle perder tiempo con cifras irreales, el precio final depende directamente de las horas de soporte y servidores incluidos. En estos 10 minutos validemos esos dos puntos técnicos; si no alcanzamos a estructurar el paquete económico completo, reagendamos 15 minutos mañana para cerrar el número definitivo con su equipo».</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASO 3 -->
+  <div id="case-3" class="case-card">
+    <div class="case-title">
+      <span>3. La Falsa Reciprocidad ("El Farol")</span>
+      <span class="tactic-tag tag-blue">Ingeniería de Intercambio: Concesión Trampa</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Negocias un contrato de distribución anual de alimentos procesados. El cliente "cede" en un punto que en realidad no le cuesta nada para exigirte una rebaja económica severa.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Valor del Contrato</div>
+        <div class="metric-val">$50.000.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Descuento Exigido</div>
+        <div class="metric-val" style="color:var(--accent-red);">8% ($4.000.000)</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Concesión del Cliente</div>
+        <div class="metric-val">Exclusividad en Zona Norte</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Costo Real de su Concesión</div>
+        <div class="metric-val">$0 (No tienen locales allá)</div>
+      </div>
+    </div>
+
+    <div class="attack-box">
+      <div class="metric-label" style="color:var(--accent-red);">Disparo Táctico del Cliente:</div>
+      <div class="attack-quote">
+        «Ya te dimos una tremenda muestra de buena voluntad aceptando la cláusula de exclusividad en la Zona Norte. Ahora te toca a ti moverte: aplícanos el 8% de descuento inmediato para cerrar el trato de manera justa».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Por qué conceder el 8% aquí califica como una "Concesión Pura / Fuga de Margen"?</li>
+        <li>¿Cómo se audita el valor real de lo que la contraparte afirma haberte concedido?</li>
+        <li>¿Qué fórmula obligatoria de compensación debe aplicarse para responder?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(3)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-3" class="solution-box">
+        <strong style="color:var(--accent-green);">Protocolo de Compensación Rigurosa:</strong><br>
+        Neutralizar la falsa concesión y amarrar retorno: <em>«Valoramos el gesto de la exclusividad en la Zona Norte; sin embargo, dado que el volumen de esa región es marginal en su operación actual, un descuento del 8% nos descalza el margen operativo. Podemos evaluar una bonificación comercial de ese orden, SI Y SÓLO SI ustedes concentran el 100% de la compra de la Zona Central y ajustan las condiciones de pago de 60 a 15 días».</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASO 4 -->
+  <div id="case-4" class="case-card">
+    <div class="case-title">
+      <span>4. El Vacío Táctico y la Intimidación Pasiva</span>
+      <span class="tactic-tag tag-red">Presión Psicológica: Tensión del Silencio</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Presentaste formalmente tu cotización técnica y económica para un proyecto de climatización. La contraparte utiliza el silencio corporal para desestabilizarte.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Monto Cotizado</div>
+        <div class="metric-val">$32.000.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Plazo de Instalación</div>
+        <div class="metric-val">30 Días Corridos</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Duración del Silencio</div>
+        <div class="metric-val" style="color:var(--accent-red);">25 Segundos</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Lenguaje No Verbal</div>
+        <div class="metric-val">Brazos Cruzados / Ceño Fruncido</div>
+      </div>
+    </div>
+
+    <div class="attack-box">
+      <div class="metric-label" style="color:var(--accent-red);">Maniobra Táctica de la Contraparte:</div>
+      <div class="attack-quote">
+        (Tras escuchar tu precio, el comité comprador guarda absoluto silencio. No anotan nada, se miran entre ellos con desaprobación y clavan la mirada en ti durante 25 segundos sin emitir una sola palabra).
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Cuál es el error novato automático que comete un vendedor ansioso ante este silencio?</li>
+        <li>¿Por qué "quien habla primero después del silencio suele pagar la cuenta"?</li>
+        <li>¿Cómo se utiliza la <strong>Empatía Táctica</strong> para devolver la pelota a su cancha?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(4)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-4" class="solution-box">
+        <strong style="color:var(--accent-green);">Protocolo de Etiquetado y Devolución:</strong><br>
+        Sostener el contacto visual con serenidad, esperar 5 segundos adicionales y etiquetar la reacción: <em>«Noto que la propuesta genera inquietud en el equipo, especialmente en lo relativo al flujo financiero del montaje. ¿Qué componente de la estructura de costos es el que requiere mayor ajuste desde su perspectiva?».</em>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Escuela de Administración y Negocios • Duoc UC • Material de Discusión en Sala
+  </footer>
+
+  <script>
+    function showCase(caseNum) {
+      document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById('case-' + caseNum).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function toggleSolution(solNum) {
+      const sol = document.getElementById('sol-' + solNum);
+      if (sol.style.display === 'block') {
+        sol.style.display = 'none';
+      } else {
+        sol.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
