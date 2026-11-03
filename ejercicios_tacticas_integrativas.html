@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNA1103 - Laboratorio de Tácticas Integrativas</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      max-width: 1000px;
+      width: 100%;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      color: #fff;
+    }
+
+    .header h1 span {
+      color: var(--accent-green);
+    }
+
+    .badge-sub {
+      background: #1e293b;
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 1000px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--accent-green);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(180deg, #1e293b 0%, #064e3b 100%);
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    }
+
+    .case-card {
+      display: none;
+      max-width: 1000px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .case-card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .case-title {
+      font-size: 1.4rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tactic-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-green { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .tag-blue { background: rgba(56, 189, 248, 0.2); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+    .tag-yellow { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
+
+    .context-box {
+      background: rgba(15, 23, 42, 0.6);
+      border-left: 4px solid var(--accent-green);
+      padding: 1rem;
+      margin: 1.2rem 0;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .metric-item {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    .metric-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .challenge-box {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px dashed var(--accent-blue);
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .challenge-quote {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #bae6fd;
+      line-height: 1.4;
+    }
+
+    .debate-prompt {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--accent-green);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+
+    .debate-prompt h4 {
+      color: var(--accent-green);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .debate-prompt ul {
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .btn-solution {
+      background: transparent;
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-solution:hover {
+      background: var(--accent-green);
+      color: #000;
+    }
+
+    .solution-box {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      border-left: 3px solid var(--accent-green);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div>
+      <h1>LABORATORIO <span>TÁCTICAS INTEGRADORAS</span></h1>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:3px;">
+        EA3: Creación de Valor, Empaquetamiento y Frontera de Pareto • VNA1103
+      </p>
+    </div>
+    <div class="badge-sub">Simulación y Creación de Valor</div>
+  </header>
+
+  <!-- Pestañas de Navegación -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showCase(1)">Caso 1: Logrolling Asimétrico</button>
+    <button class="tab-btn" onclick="showCase(2)">Caso 2: Ampliación de Recursos</button>
+    <button class="tab-btn" onclick="showCase(3)">Caso 3: Costos No Específicos</button>
+    <button class="tab-btn" onclick="showCase(4)">Caso 4: Solución Puente (Bridging)</button>
+  </div>
+
+  <!-- CASO 1 -->
+  <div id="case-1" class="case-card active">
+    <div class="case-title">
+      <span>1. El Conflicto de Flete y Plazo de Entrega</span>
+      <span class="tactic-tag tag-green">Táctica Integradora: Logrolling (Empaquetamiento)</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Negocias la venta de 1.500 unidades de equipamiento médico hospitalario para una red de clínicas privadas. El cliente exige despacho inmediato en 5 días y 90 días de crédito comercial, lo que pone en riesgo tu liquidez financiera.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Valor del Negocio</div>
+        <div class="metric-val">$45.000.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Demanda Posicional del Cliente</div>
+        <div class="metric-val" style="color:var(--accent-blue);">Despacho en 5 días + 90 d crédito</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Interés Oculto del Cliente</div>
+        <div class="metric-val">Evitar multas por retraso de apertura</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Interés Clave Propio</div>
+        <div class="metric-val" style="color:var(--accent-green);">Flujo de caja a máx. 30 días</div>
+      </div>
+    </div>
+
+    <div class="challenge-box">
+      <div class="metric-label" style="color:var(--accent-blue);">Postura Bloqueada de la Contraparte:</div>
+      <div class="challenge-quote">
+        «No podemos movernos de los 90 días de crédito porque nuestras finanzas están cerradas; pero si no tenemos los equipos instalados este viernes, la inauguración del ala norte se cancela y no habrá contrato alguno».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Qué variable tiene altísimo valor y urgencia para el cliente, pero un costo marginal controlado para ti?</li>
+        <li>¿Por qué ofrecer 60 días de crédito sería un "punto medio perezoso" que no satisface a ninguna de las partes?</li>
+        <li>¿Cómo se redacta un paquete condicionado (*Logrolling*) que aumente el valor conjunto?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(1)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-1" class="solution-box">
+        <strong style="color:var(--accent-green);">Arquitectura del Empaquetamiento (Logrolling):</strong><br>
+        Identificar la asimetría de valor: al cliente le aterra la multa de inauguración (tiempo), a nosotros nos asfixia el plazo de pago (liquidez).<br><br>
+        <strong>Fórmula de Propuesta:</strong><br>
+        <em>«Entendemos que la fecha del viernes es crítica para su directorio y podemos garantizarles el montaje técnico en 96 horas con cuadrilla prioritaria. Sin embargo, para asumir ese costo logístico acelerado, requerimos que el pago se estructure en un 40% contra entrega y el 60% restante a 30 días con pagaré comercial. De esta forma aseguran su inauguración sin multas y nosotros viabilizamos el despacho inmediato».</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASO 2 -->
+  <div id="case-2" class="case-card">
+    <div class="case-title">
+      <span>2. La Torta Fija del Espacio Publicitario</span>
+      <span class="tactic-tag tag-blue">Táctica Integradora: Ampliación del Pastel (Expand the Pie)</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Negocias el patrocinio exclusivo de una marca deportiva para un torneo universitario intersedes. El comité organizador pide $12.000.000 por la lona central, pero la marca solo dispone de $7.000.000 en su presupuesto de marketing presencial.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Tarifa Solicitada</div>
+        <div class="metric-val">$12.000.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Presupuesto Marca</div>
+        <div class="metric-val" style="color:var(--accent-yellow);">$7.000.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Brecha Aparentemente Insoluble</div>
+        <div class="metric-val" style="color:var(--accent-red);">$5.000.000</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Recurso Adicional Subutilizado</div>
+        <div class="metric-val">Canales digitales y base de datos</div>
+      </div>
+    </div>
+
+    <div class="challenge-box">
+      <div class="metric-label" style="color:var(--accent-blue);">Postura de Bloqueo:</div>
+      <div class="challenge-quote">
+        «La lona central cuesta $12 millones según el tarifario oficial de la federación. Si solo tienen 7 millones, tendrán que conformarse con un pendón lateral en la salida de emergencia o no participar del evento».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Cuál es el sesgo cognitivo de asumir que "el patrocinio solo se paga con la plata de la lona"?</li>
+        <li>¿Qué activos intangibles o en especie (canje, plataformas, base de datos) puede aportar la marca para compensar los $5 millones faltantes?</li>
+        <li>¿Cómo expandir los recursos disponibles para alcanzar la frontera eficiente?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(2)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-2" class="solution-box">
+        <strong style="color:var(--accent-green);">Arquitectura de Ampliación de Recursos:</strong><br>
+        Romper la restricción unidimensional monetaria agregando nuevos activos al trato.<br><br>
+        <strong>Fórmula de Propuesta:</strong><br>
+        <em>«Aceptamos los $7.000.000 al contado para financiar la producción del evento, y cubrimos los $5.000.000 restantes mediante equipamiento técnico directo: entregaremos la indumentaria oficial completa de los 120 deportistas valorizada en $3.500.000 de costo de bodega, más una campaña de difusión cruzada en las redes sociales de nuestra marca garantizando 50.000 visualizaciones para el torneo. Así el torneo recibe $14 millones de valor total real y la marca no sobrepasa su presupuesto en efectivo».</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASO 3 -->
+  <div id="case-3" class="case-card">
+    <div class="case-title">
+      <span>3. La Compensación No Específica (Nonspecific Compensation)</span>
+      <span class="tactic-tag tag-purple">Táctica Integradora: Retribución Fuera del Eje</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Una agencia de marketing digital negocia la renovación con una cadena de retail gastronómico. El cliente exige que la agencia trabaje con presencia física obligatoria en sus oficinas 4 días a la semana, pero la agencia opera 100% remota y su equipo renunciaría si los fuerzan a ir presencial.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Valor del Fee Mensual</div>
+        <div class="metric-val">$4.800.000 / mes</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Demanda del Cliente</div>
+        <div class="metric-val">4 días presenciales por semana</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Costo Interno Agencia</div>
+        <div class="metric-val" style="color:var(--accent-red);">Riesgo de fuga de talento clave</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Preocupación Real del Cliente</div>
+        <div class="metric-val">Tiempos lentos de corrección de artes</div>
+      </div>
+    </div>
+
+    <div class="challenge-box">
+      <div class="metric-label" style="color:var(--accent-blue);">Postura de Bloqueo:</div>
+      <div class="challenge-quote">
+        «Necesitamos ver al equipo creativo aquí sentado de lunes a jueves. Nos sentimos abandonados cuando pedimos cambios urgentes para las promociones de fin de semana y tardan 24 horas en responder un correo».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Qué dolor operativo real esconde la demanda de "querer verlos sentados en la oficina"?</li>
+        <li>¿Cómo compensar a la contraparte en una dimensión distinta (tecnológica/servicio) sin obligar a la agencia a incurrir en costos de oficina o pérdida de personal?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(3)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-3" class="solution-box">
+        <strong style="color:var(--accent-green);">Arquitectura de Compensación No Específica:</strong><br>
+        Resolver la queja de fondo (velocidad de respuesta) mediante una compensación que no exige ceder en la posición tóxica (presencialidad).<br><br>
+        <strong>Fórmula de Propuesta:</strong><br>
+        <em>«Entendemos perfectamente que la demora en los artes de fin de semana les genera pérdidas en locales. Para solucionar esto de raíz sin alterar la estructura remota de los diseñadores, crearemos un canal directo de emergencia en Slack con un diseñador de guardia exclusivo los viernes de 14:00 a 20:00 hrs para cambios en tiempo real (menos de 20 minutos de respuesta), más un dashboard en vivo donde verán el avance de cada campaña. Además, el director de cuenta asistirá presencialmente los lunes a la reunión de planificación de 9:00 a 11:00 am».</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASO 4 -->
+  <div id="case-4" class="case-card">
+    <div class="case-title">
+      <span>4. La Solución Puente (Bridging) y Redefinición</span>
+      <span class="tactic-tag tag-yellow">Táctica Integradora: Creación de Nueva Alternativa</span>
+    </div>
+    <div class="context-box">
+      <strong>Contexto:</strong> Negocias el arriendo de un local comercial estratégico en un strip center de alta afluencia. El arrendador exige un contrato forzoso a 5 años sin opción de salida y canon fijo de 80 UF mensuales. La franquicia gastronómica teme firmar a 5 años sin saber cómo responderá el público de esa comuna.
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-label">Canon Fijo Exigido</div>
+        <div class="metric-val">80 UF / mes</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Plazo Exigido Arrendador</div>
+        <div class="metric-val" style="color:var(--accent-red);">5 Años Forzosos</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Interés del Arrendador</div>
+        <div class="metric-val">Garantizar ingresos estables y pagar deuda bancaria</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Interés del Franquiciado</div>
+        <div class="metric-val">Flexibilidad y control del riesgo de quiebra</div>
+      </div>
+    </div>
+
+    <div class="challenge-box">
+      <div class="metric-label" style="color:var(--accent-blue);">Postura de Bloqueo:</div>
+      <div class="challenge-quote">
+        «No puedo hacer contratos a 1 o 2 años. Mi crédito para construir el strip center exige que los locales estén colocados a 5 años plazo mínimo o el banco me castiga la tasa. Si no firman a 5 años por 80 UF, paso al siguiente interesado».
+      </div>
+    </div>
+
+    <div class="debate-prompt">
+      <h4>Preguntas de Maniobra para la Sala:</h4>
+      <ul>
+        <li>¿Por qué ni 3 años ni 70 UF solucionan el problema estructural de las partes?</li>
+        <li>¿Cómo diseñar una "Solución Puente" que proteja el financiamiento bancario del dueño y a la vez resguarde el riesgo financiero de la franquicia?</li>
+      </ul>
+      <button class="btn-solution" onclick="toggleSolution(4)">Ver Maniobra Estratégica Sugerida</button>
+      <div id="sol-4" class="solution-box">
+        <strong style="color:var(--accent-green);">Arquitectura de Solución Puente (Bridging):</strong><br>
+        Redefinir la estructura del contrato para alinear el éxito financiero sin choque de posturas.<br><br>
+        <strong>Fórmula de Propuesta:</strong><br>
+        <em>«Aceptamos firmar el contrato formal a 5 años para que usted cumpla con los convenios del banco, pero estructuramos un canon mixto con rampa de aceleración: los primeros 12 meses el arriendo será de 55 UF fijas + un 4% de las ventas brutas auditadas en boleta. Si superamos el punto de equilibrio proyectado, usted ganará más de 95 UF mensuales. Asimismo, incluimos una cláusula de salida anticipada exclusivamente en el mes 24, condicionada a que la franquicia indemnice con 2 meses de arriendo o presente un subarrendatario calificado».</em>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Escuela de Administración y Negocios • Duoc UC • Laboratorio de Casos de Creación de Valor
+  </footer>
+
+  <script>
+    function showCase(caseNum) {
+      document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById('case-' + caseNum).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function toggleSolution(solNum) {
+      const sol = document.getElementById('sol-' + solNum);
+      if (sol.style.display === 'block') {
+        sol.style.display = 'none';
+      } else {
+        sol.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

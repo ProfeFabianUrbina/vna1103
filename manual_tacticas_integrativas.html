@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNA1103 - Guía de Estudio: Tácticas Integradoras y Creación de Valor</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    h1 span {
+      color: var(--accent-green);
+    }
+
+    .intro-text {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.8rem;
+    }
+
+    .section-num {
+      background: var(--accent-green);
+      color: #0f172a;
+      font-weight: 900;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: #fff;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent-blue);
+      margin: 1.2rem 0 0.5rem 0;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .theory-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-left: 4px solid var(--accent-green);
+      padding: 1rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.2rem;
+      font-size: 0.92rem;
+    }
+
+    .example-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px dashed var(--accent-green);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1.2rem 0;
+    }
+
+    .example-title {
+      color: var(--accent-green);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dialogue-bubble {
+      margin: 0.8rem 0;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .dialogue-opponent {
+      background: rgba(239, 68, 68, 0.15);
+      border-left: 4px solid var(--accent-red);
+      color: #fca5a5;
+    }
+
+    .dialogue-error {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 4px solid #f87171;
+      color: #cbd5e1;
+      margin-left: 1.5rem;
+    }
+
+    .dialogue-master {
+      background: rgba(16, 185, 129, 0.15);
+      border-left: 4px solid var(--accent-green);
+      color: #a7f3d0;
+      margin-left: 1.5rem;
+    }
+
+    .step-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 1rem 0;
+    }
+
+    .step-list li {
+      position: relative;
+      padding-left: 1.8rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    .step-list li::before {
+      content: "➔";
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: bold;
+    }
+
+    .summary-card {
+      background: linear-gradient(180deg, #1e293b 0%, #064e3b 100%);
+      border: 1px solid var(--accent-green);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .summary-card h3 {
+      color: var(--accent-yellow);
+      margin-top: 0;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover {
+      color: var(--accent-green);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="nav-back">← Volver al Portal de Negociación VNA1103</a>
+
+    <header>
+      <span class="badge-top">Manual de Estudio y Fundamentación • EA3</span>
+      <h1>MANUAL DE MANIOBRAS <span>INTEGRADORAS EN LA MESA</span></h1>
+      <p class="intro-text">
+        Ingeniería del acuerdo comercial, técnicas de creación de valor, exploración de intereses y maximización en la Frontera de Pareto. Material de apoyo técnico para la Ficha de Planificación y la Evaluación Parcial 3.
+      </p>
+    </header>
+
+    <!-- INTRODUCCIÓN GENERAL -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">💡</div>
+        <h2>La Verdad sobre la Negociación Integradora</h2>
+      </div>
+      <p>
+        Existe un mito común en los negocios: creer que la negociación integradora consiste en "ser amable, ceder para agradar o buscar el término medio". <strong>Nada más alejado de la realidad</strong>. La negociación integrativa (Modelo Harvard / Lewicki) no es filantropía ni debilidad; es una <strong>disciplina rigurosa de ingeniería de recursos</strong> que busca descubrir diferencias asimétricas de valoración entre las partes para agrandar el pastel de beneficios antes de dividirlo.
+      </p>
+      <div class="theory-box">
+        <strong>El Peligro del "Punto Medio Perezoso":</strong><br>
+        Cuando dos partes tienen posturas enfrentadas (ejemplo: un vendedor pide $100 y el comprador ofrece $60) y simplemente acuerdan "partir la diferencia en $80", están cometiendo negligencia estratégica. Dividir la torta al medio deja enorme valor sin explotar en la mesa. Las tácticas integradoras permiten que ambas partes consigan el 100% de lo que realmente necesitan en sus variables prioritarias.
+      </div>
+    </div>
+
+    <!-- TÁCTICA 1 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Empaquetamiento Asimétrico (Logrolling)</h2>
+      </div>
+      
+      <h3>Fundamento Conceptual</h3>
+      <p>
+        El <em>Logrolling</em> es el motor central de la negociación integradora. Se basa en una realidad económica ineludible: <strong>rara vez dos negociadores valoran todos los puntos de la agenda con la misma intensidad</strong>. Lo que para una empresa representa un costo insignificante o tiempo ocioso, para la otra puede ser un salvavidas crítico de operación. El negociador integrador jamás trata los temas uno por uno de manera aislada (eso es distributivo plano); empaqueta variables cruzadas.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Caso Didáctico de Estudio: Desarrollo de Software ERP para Cadena Farmacéutica</div>
+        <p>
+          Una empresa de tecnología negocia la implementación de un sistema de facturación electrónica. El cliente exige un <strong>20% de descuento en la tarifa de desarrollo</strong> argumentando que su presupuesto anual de inversión está agotado.
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Postura Rígida del Cliente:</strong><br>
+          «O me rebajas el costo del proyecto de $30.000.000 a $24.000.000, o no podemos firmar la orden este semestre».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Ceder Precio sin Paquete):</strong><br>
+          «Bueno, para cerrar hoy te lo dejo en $25.000.000».<br>
+          <em>Consecuencia:</em> Perdiste $5.000.000 de margen neto sin obtener ningún compromiso a cambio. El cliente asume que tu precio original estaba inflado.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Integradora (Logrolling Condicionado):</strong><br>
+          «Entendemos la restricción presupuestaria de su área este semestre. Podemos mantener la facturación del desarrollo en $24.000.000 durante este año, <strong>SI Y SÓLO SI</strong> firmamos en el mismo acto el contrato de soporte y mantenimiento preventivo por 24 meses a $1.200.000 mensuales, y nos otorgan exclusividad como proveedor tecnológico para sus 40 nuevas sucursales».<br>
+          <em>Resultado:</em> El cliente soluciona su problema de caja inmediato (gasto de capital) y la empresa asegura ingresos recurrentes de largo plazo (gasto operativo de alta rentabilidad).
+        </div>
+      </div>
+
+      <h3>Protocolo para Diseñar Logrolling en la Ficha EP3</h3>
+      <ul class="step-list">
+        <li><strong>Identifica tus monedas de bajo costo:</strong> Variables que a tu empresa le cuestan poco entregar (ej. capacitaciones grabadas, plazos diferidos, soporte remoto, garantías extendidas de fábrica).</li>
+        <li><strong>Mapea el dolor de la contraparte:</strong> Descubre qué variable les quita el sueño (ej. flujo de caja semanal, fecha de auditoría, aprobaciones de directorio).</li>
+        <li><strong>Vincula las variables en un solo paquete:</strong> Nunca digas "sí" a un punto sin amarrarlo inmediatamente al siguiente punto de la agenda.</li>
+      </ul>
+    </div>
+
+    <!-- TÁCTICA 2 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>Ampliación del Pastel de Recursos (Expand the Pie)</h2>
+      </div>
+
+      <h3>Fundamento Conceptual</h3>
+      <p>
+        Esta táctica combate el sesgo cognitivo de la "torta fija" (asumir falsamente que las ganancias de uno son necesariamente las pérdidas del otro). Ocurre cuando las partes chocan frontalmente por la escasez de un recurso único (habitualmente dinero o tiempo). En vez de disputar ese recurso limitado, el negociador introduce <strong>nuevos recursos o activos complementarios</strong> que no estaban en la mesa original para destrabar el acuerdo.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Caso Didáctico de Estudio: Fabricación de Mobiliario Ergonómico para Cowork</div>
+        <p>
+          Un fabricante de mobiliario de oficina cotiza 100 estaciones de trabajo por <strong>$35.000.000</strong> a una red de oficinas compartidas en expansión. El cliente solo dispone de <strong>$26.000.000</strong> de caja líquida.
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Punto de Bloqueo:</strong><br>
+          «Tenemos $26 millones y no hay un peso más de capital de apertura. Si no ajustas el valor a ese techo, tendremos que comprar muebles importados usados».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Reducir Calidad o Rechazar):</strong><br>
+          «Por $26 millones solo te puedo entregar melamina de baja densidad sin brazos ajustables».<br>
+          <em>Consecuencia:</em> Dañas la reputación de tu producto y el cliente queda insatisfecho con la durabilidad.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Integradora (Expansión de Recursos):</strong><br>
+          «Aceptamos los $26.000.000 en efectivo para cubrir los costos duros de materia prima, y los $9.000.000 restantes los compensamos mediante un acuerdo de co-branding y vitrina comercial: nuestro mobiliario incluirá una placa discreta con código QR ('Equipado por Mobiliarios Pro') y ustedes nos cederán el uso gratuito de una sala de reuniones ejecutiva por 12 meses para recibir a nuestros clientes corporativos, funcionando como showroom en vivo».<br>
+          <em>Resultado:</em> El cliente amuebla sus oficinas con estándar premium sin descalzarse financieramente y la fábrica ahorra el costo de arrendar un showroom comercial propio en Las Condes.
+        </div>
+      </div>
+
+      <h3>Protocolo para Ampliar Recursos en la Ficha EP3</h3>
+      <ul class="step-list">
+        <li><strong>Audita activos ociosos:</strong> Espacios físicos, licencias no usadas, capacidad de transporte vacía, bases de datos o vitrinas publicitarias.</li>
+        <li><strong>Convierte activos en moneda de cambio:</strong> Si falta dinero líquido, busca activos en especie que tengan valor económico equivalente para la operación.</li>
+      </ul>
+    </div>
+
+    <!-- TÁCTICA 3 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Compensación No Específica (Nonspecific Compensation)</h2>
+      </div>
+
+      <h3>Fundamento Conceptual</h3>
+      <p>
+        En muchas negociaciones, una de las partes exige algo que genera un dolor insostenible en la otra (una concesión inaceptable). La <em>Compensación No Específica</em> consiste en lograr que esa parte acepte retirar o modificar su demanda tóxica <strong>retribuyéndola en una dimensión completamente ajena al conflicto original</strong>. No se resuelve el problema dentro del mismo eje, sino que se compensa el dolor con una ganancia colateral atractiva.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Caso Didáctico de Estudio: Transporte de Carga Refrigerada para Exportación Frutícola</div>
+        <p>
+          Una empresa de camiones frigoríficos negocia la temporada con una exportadora de cerezas. La exportadora exige una <strong>penalización draconiana de $15.000.000</strong> por cada hora de atraso en la llegada al puerto de Valparaíso.
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Demanda Intratable:</strong><br>
+          «Si el camión llega una hora tarde y el contenedor pierde el barco 'Cherry Express' hacia China, la fruta se desvaloriza. Exigimos la multa de $15 millones por hora o no hay contrato».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Pelear la Cláusula Legal):</strong><br>
+          «Es ridículo, ningún transportista en Chile les va a firmar una multa de $15 millones por un taco en la Ruta 68».<br>
+          <em>Consecuencia:</em> Ruptura de la mesa por escalada emocional defensiva.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Integradora (Compensación Fuera de Eje):</strong><br>
+          «Entendemos perfectamente que la ventana de zarpe del barco es inviolable. En vez de poner una multa de $15 millones que haría quebrar a cualquier operador ante un choque ajeno en la carretera, les entregaremos una compensación de riesgo estructural: instalaremos telemetría satelital y sensores de temperatura en tiempo real conectados a sus teléfonos, asignaremos un camión nodriza de respaldo a mitad de ruta en Casablanca listo para trasvasijar carga ante cualquier falla mecánica en menos de 20 minutos, y asumiremos el costo de una póliza de seguros internacional que cubre el 100% del valor FOB de la fruta ante pérdida de barco. A cambio, la multa contractual se topeará en el valor del flete ($1.800.000)».<br>
+          <em>Resultado:</em> El exportador elimina su riesgo real de pérdida patrimonial y la empresa de transporte evita una cláusula que amenazaba su existencia jurídica.
+        </div>
+      </div>
+
+      <h3>Protocolo para Diseñar Compensaciones No Específicas</h3>
+      <ul class="step-list">
+        <li><strong>Pregunta el 'Para Qué':</strong> No te quedes en lo que exigen legalmente; investiga qué catástrofe financiera o personal intentan prevenir.</li>
+        <li><strong>Sustituye la sanción por prevención:</strong> Ofrece garantías operativas, seguros o respaldos tecnológicos que hagan innecesaria la cláusula de castigo.</li>
+      </ul>
+    </div>
+
+    <!-- TÁCTICA 4 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Solución Puente y Redefinición (Bridging)</h2>
+      </div>
+
+      <h3>Fundamento Conceptual</h3>
+      <p>
+        El <em>Bridging</em> es la cúspide de la creatividad en negociación. Ocurre cuando <strong>ninguna de las partes cede en sus demandas originales</strong>, pero a través de una profunda reformulación de los intereses subyacentes, se inventa una opción completamente nueva que satisface las necesidades de ambos sin que ninguno sienta que perdió terreno.
+      </p>
+
+      <div class="example-box">
+        <div class="example-title">Caso Didáctico de Estudio: Fabricación de Envases Biodegradables para Cosmética</div>
+        <p>
+          Un laboratorio de cosmética natural quiere contratar a un fabricante de bioplásticos. El laboratorio exige <strong>certificación biodegradable compostable europea (TÜV Austria)</strong> en 30 días. El fabricante solo tiene la certificación chilena y la europea demora 8 meses de auditoría.
+        </p>
+        <div class="dialogue-bubble dialogue-opponent">
+          <strong>Choque de Posturas:</strong><br>
+          «Nuestra marca promete sustentabilidad radical. Sin el sello TÜV Austria no podemos salir al mercado el próximo mes. O tienen el sello europeo ya o buscaremos un proveedor en Alemania».
+        </div>
+
+        <div class="dialogue-bubble dialogue-error">
+          <strong>❌ Error Típico (Prometer lo Imposible o Resignarse):</strong><br>
+          «Trataremos de apurar a los auditores europeos a ver si sale en 45 días...»<br>
+          <em>Consecuencia:</em> Incumplimiento casi seguro de plazos y litigio comercial posterior.
+        </div>
+
+        <div class="dialogue-bubble dialogue-master">
+          <strong>✔ Maniobra Integradora (Solución Puente por Etapas):</strong><br>
+          «Ambos queremos que el lanzamiento de su línea sea un éxito ecológico incuestionable. Como el sello europeo tarda 8 meses para cualquier fabricante por plazos de laboratorio, construyamos un puente comercial: los primeros 8 meses envasaremos con biopolímero certificado chileno bajo una campaña de 'Sustentabilidad Local y Huella de Carbono Cero por Producción Nacional', mientras nuestro laboratorio financia y tramita en paralelo la certificación TÜV europea. Al mes 9, incorporaremos el sello europeo en los lotes de exportación sin costo adicional de diseño. Así ustedes lanzan a tiempo y lideran el relato de innovación verde nacional».<br>
+          <em>Resultado:</em> El laboratorio cosmético lanza su producto a tiempo con un argumento de marketing poderoso y el fabricante asegura un contrato a largo plazo financiado.
+        </div>
+      </div>
+
+      <h3>Protocolo de Bridging en la Ficha EP3</h3>
+      <ul class="step-list">
+        <li><strong>Desglosa las necesidades de fondo:</strong> ¿Tiempo? ¿Certificación? ¿Relato de marca? ¿Costos?</li>
+        <li><strong>Estructura acuerdos escalonados:</strong> Divide la solución en Fase 1 (resolución inmediata) y Fase 2 (estándar definitivo).</li>
+        <li><strong>Alinea incentivos de largo plazo:</strong> Asegúrate de que el éxito del acuerdo dependa del trabajo colaborativo de ambas organizaciones.</li>
+      </ul>
+    </div>
+
+    <!-- SÍNTESIS FINALES -->
+    <div class="summary-card">
+      <h3>Matriz de Integración para la Ficha de Planificación (EP3)</h3>
+      <p style="color: #cbd5e1;">
+        Cuando prepares la entrega de la Evaluación Parcial 3, recuerda que el evaluador buscará coherencia absoluta entre el modelo declarado y el comportamiento observable:
+      </p>
+      <ul class="step-list">
+        <li><strong>En Exploración de Intereses:</strong> Explicar claramente la diferencia entre la posición declarada por el cliente y su necesidad subyacente de negocio.</li>
+        <li><strong>En Logrolling / Paquetes:</strong> Redactar las cláusulas de intercambio bajo la arquitectura <em>«Si tú me concedes X en variable de bajo costo, yo te entrego Y en tu variable de alta prioridad»</em>.</li>
+        <li><strong>En la Frontera de Pareto:</strong> Demostrar analíticamente por qué la solución alcanzada entrega más valor a ambas partes que un simple descuento de precio.</li>
+      </ul>
+    </div>
+
+    <footer>
+      Escuela de Administración y Negocios • Duoc UC • Plataforma Docente VNA1103
+    </footer>
+  </div>
+
+</body>
+</html>
