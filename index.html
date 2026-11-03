@@ -13,6 +13,7 @@
       --accent-blue: #38bdf8;
       --accent-green: #10b981;
       --accent-purple: #a855f7;
+      --accent-red: #ef4444;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
     }
@@ -126,9 +127,14 @@
       box-shadow: 0 6px 20px rgba(56, 189, 248, 0.15);
     }
 
-    .card-link.highlight {
+    .card-link.highlight-yellow {
       border-color: var(--accent-yellow);
       background: linear-gradient(180deg, #1e293b 0%, #291e0f 100%);
+    }
+
+    .card-link.highlight-green {
+      border-color: var(--accent-green);
+      background: linear-gradient(180deg, #1e293b 0%, #064e3b 100%);
     }
 
     .card-tag {
@@ -136,20 +142,12 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      color: var(--accent-blue);
     }
 
-    .card-tag.tag-yellow {
-      color: var(--accent-yellow);
-    }
-
-    .card-tag.tag-green {
-      color: var(--accent-green);
-    }
-
-    .card-tag.tag-purple {
-      color: var(--accent-purple);
-    }
+    .tag-yellow { color: var(--accent-yellow); }
+    .tag-green { color: var(--accent-green); }
+    .tag-blue { color: var(--accent-blue); }
+    .tag-purple { color: var(--accent-purple); }
 
     .card-name {
       font-size: 1.1rem;
@@ -202,32 +200,50 @@
       <div class="section-title">EA3: Planificación y Estrategias en la Negociación</div>
       <div class="grid-links">
 
-        <!-- Laboratorio de Arsenal Táctico (Pizarra Interactiva) -->
-        <a href="casos_entrenamiento_tactico.html" class="card-link highlight">
-          <div class="card-tag tag-yellow">Actividad en Sala • Pizarra Interactiva</div>
-          <div class="card-name">Laboratorio de Arsenal Táctico</div>
-          <div class="card-desc">Fichas de simulación con métricas y ataques reales: desanclaje técnico, emboscada de agenda, concesiones trampa y tensión del silencio.</div>
+        <!-- 1. Laboratorio Tácticas Distributivas -->
+        <!-- DESHABILITADO TEMPORALMENTE (Borrar esta línea para habilitar)
+        <a href="casos_entrenamiento_tactico.html" class="card-link highlight-yellow">
+          <div class="card-tag tag-yellow">Tácticas Distributivas • Pizarra en Sala</div>
+          <div class="card-name">Laboratorio: Respuestas Bajo Presión</div>
+          <div class="card-desc">Simulación con métricas reales: desanclaje técnico, emboscada de agenda/deadline, concesiones trampa y tensión del silencio.</div>
+        </a>
+        HASTA ACÁ -->
+
+        <!-- 2. Manual Resolución Tácticas Distributivas -->
+        <a href="manual_resolucion_tactica.html" class="card-link highlight-yellow">
+          <div class="card-tag tag-yellow">Guía de Estudio • Distributiva</div>
+          <div class="card-name">Manual: Resolución de Presiones</div>
+          <div class="card-desc">Fundamentación psicológica (Kahneman/Voss), protocolo paso a paso con nuevos casos y trazabilidad para la Ficha EP3.</div>
         </a>
 
-        <!-- Manual de Resolución Táctica (Guía de Estudio) -->
-        <a href="manual_resolucion_tactica.html" class="card-link highlight">
-          <div class="card-tag tag-yellow">Manual de Estudio • Análisis y Soluciones</div>
-          <div class="card-name">Manual de Maniobras Tácticas</div>
-          <div class="card-desc">Fundamentos metodológicos, psicología del conflicto, resolución paso a paso con nuevos casos y trazabilidad para la Ficha EP3.</div>
+        <!-- 3. Laboratorio Tácticas Integrativas -->
+        <!-- DESHABILITADO TEMPORALMENTE (Borrar esta línea para habilitar)
+        <a href="ejercicios_tacticas_integrativas.html" class="card-link highlight-green">
+          <div class="card-tag tag-green">Tácticas Integrativas • Pizarra en Sala</div>
+          <div class="card-name">Laboratorio: Creación de Valor</div>
+          <div class="card-desc">Casos de maximización conjunta: empaquetamiento (Logrolling), ampliación del pastel de recursos, costos no específicos y soluciones puente (Bridging).</div>
+        </a>
+        HASTA ACÁ -->
+
+        <!-- 4. Manual Tácticas Integrativas -->
+        <a href="manual_tacticas_integrativas.html" class="card-link highlight-green">
+          <div class="card-tag tag-green">Guía de Estudio • Integrativa</div>
+          <div class="card-name">Manual: Creación de Valor y Pareto</div>
+          <div class="card-desc">Ingeniería del acuerdo comercial: exploración profunda de intereses, superación del punto medio perezoso y diseño de paquetes asimétricos.</div>
         </a>
 
-        <!-- Simulador Móvil EA3 -->
+        <!-- 5. Simulador Móvil EA3 -->
         <a href="simulador_agenda_ea3.html" class="card-link">
           <div class="card-tag tag-blue">Micro-Simulador • Móvil</div>
           <div class="card-name">Simulador de Tácticas y Agenda</div>
           <div class="card-desc">Diagnóstico rápido: Control de agenda, detección de fugas de margen, compensación condicionada y empaquetamiento integrativo.</div>
         </a>
 
-        <!-- Retro Game NegocioMon -->
+        <!-- 6. Retro Game NegocioMon -->
         <a href="juego_negociomon.html" class="card-link">
           <div class="card-tag tag-purple">Retro Game • Game Boy Edition</div>
           <div class="card-name">NegocioMon: Simulador de Combate</div>
-          <div class="card-desc">Videojuego 8-bit de toma de decisiones tácticas: paciencia del cliente vs. margen propio, logrolling y avance por niveles.</div>
+          <div class="card-desc">Videojuego 8-bit de toma de decisiones tácticas: paciencia del cliente vs. margen comercial, logrolling y avance por niveles.</div>
         </a>
 
       </div>
@@ -255,14 +271,14 @@
 
         <!-- Compendio Teórico -->
         <a href="compendio-teorico.html" class="card-link">
-          <div class="card-tag">Marco Conceptual</div>
+          <div class="card-tag tag-blue">Marco Conceptual</div>
           <div class="card-name">Compendio Teórico</div>
           <div class="card-desc">Glosario formal de negociación: Lewicki, axiomas de Watzlawick, dilemas de Kelley y principios de Cialdini.</div>
         </a>
 
         <!-- Guía de Estudio -->
         <a href="guia-estudio.html" class="card-link">
-          <div class="card-tag">Guía Práctica</div>
+          <div class="card-tag tag-blue">Guía Práctica</div>
           <div class="card-name">Guía de Estudio</div>
           <div class="card-desc">Orientaciones metodológicas, síntesis de contenidos y esquemas de preparación para evaluaciones.</div>
         </a>
@@ -276,7 +292,7 @@
 
         <!-- Mini Casos -->
         <a href="mini-casos.html" class="card-link">
-          <div class="card-tag">Casos de Aplicación</div>
+          <div class="card-tag tag-blue">Casos de Aplicación</div>
           <div class="card-name">Mini-Casos Prácticos</div>
           <div class="card-desc">Situaciones de negociación abreviadas para entrenamiento en toma de decisiones y detección de variables.</div>
         </a>
